@@ -1,14 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Code, Download, Play, Sparkles, BarChart3, Zap, Database, Component, Brain, FileCode } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Github, Linkedin, Mail, Code2, ArrowRight, MapPin } from 'lucide-react';
 import ThreeAvatar from './ThreeAvatar';
 
 const Hero: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  const roles = ['LLM Applications', 'RAG Pipelines', 'FastAPI Backends', 'ReAct Agents'];
 
   useEffect(() => {
     setIsLoaded(true);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
@@ -17,191 +20,185 @@ const Hero: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const roleTimer = setInterval(() => {
+      setRoleIndex((i) => (i + 1) % roles.length);
+    }, 2200);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(roleTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const scrollToAbout = () => {
-    const element = document.getElementById('about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const stats = [
+    { value: '616+', label: 'LeetCode solved' },
+    { value: '2', label: 'AI internships' },
+    { value: "MAIT '26", label: 'CSE graduate' },
+  ];
 
-  const techStack = [
-    { icon: FileCode, name: "Python", delay: 0, color: "text-yellow-400" },
-    { icon: Brain, name: "AI/ML", delay: 1000, color: "text-purple-400" },
-    { icon: Component, name: "React", delay: 2000, color: "text-blue-400" },
-    { icon: Database, name: "Data", delay: 3000, color: "text-green-400" },
-    { icon: Zap, name: "TensorFlow", delay: 4000, color: "text-orange-400" },
-    { icon: BarChart3, name: "Analytics", delay: 5000, color: "text-pink-400" }
+  const socials = [
+    { href: 'https://github.com/anmolairi03/', icon: Github, label: 'GitHub' },
+    { href: 'http://www.linkedin.com/in/anmol809', icon: Linkedin, label: 'LinkedIn' },
+    { href: 'https://leetcode.com/u/zeus408809/', icon: Code2, label: 'LeetCode' },
+    { href: 'mailto:anmolandanay@gmail.com', icon: Mail, label: 'Email' },
   ];
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-10">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-        {/* Animated Gradient Overlay */}
-        <div 
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)`
-          }}
-        />
-        
-        {/* Floating Particles */}
-        <div className="absolute inset-0">
-          {[...Array(50)].map((_, i) => (
+    <section
+      id="hero"
+      data-theme="core"
+      className="min-h-screen flex items-center relative overflow-hidden pt-28 pb-16"
+    >
+      <div className="scroll-word" aria-hidden="true">SHIP</div>
+      {/* Subtle gold spotlight following the cursor */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-500"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(233, 172, 63, 0.08), transparent 45%)`,
+        }}
+      />
+      {/* Faint dot grid texture */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+
+      <div className="container mx-auto px-6 lg:px-10 relative z-10">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          {/* Left: copy */}
+          <div className="text-left">
             <div
-              key={i}
-              className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Geometric Shapes */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 border border-blue-400/20 rounded-full animate-spin-slow"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border border-purple-400/20 rotate-45 animate-pulse"></div>
-          <div className="absolute bottom-32 left-20 w-40 h-40 border border-cyan-400/20 rounded-lg animate-float"></div>
-          <div className="absolute bottom-20 right-10 w-20 h-20 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full animate-bounce"></div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Hero Content */}
-          <div className="text-left space-y-8">
-            {/* Greeting */}
-            <div className={`transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} mt-20`}>
-              <p className="text-lg text-blue-400 mb-1 font-medium">Hi, I'm</p>
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full neu-inset text-sm text-gray-400 mb-8 transition-all duration-700 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <MapPin className="w-4 h-4 gold-text" />
+              New Delhi, India
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-gold-pulse ml-1" />
+              <span className="text-gray-500">Open to roles</span>
             </div>
 
-            {/* Name */}
-            <div className={`transform transition-all duration-1000 delay-300 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} -mt-4`}>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-white via-blue-200 to-cyan-200 bg-clip-text text-transparent">
-                  Anmol
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                  Airi
-                </span>
-              </h1>
-            </div>
+            <p
+              className={`font-mono text-sm gold-text mb-4 transition-all duration-700 delay-100 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              &gt; hi, I&apos;m
+            </p>
 
-            {/* Title */}
-            <div className={`transform transition-all duration-1000 delay-500 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <h2 className="text-2xl md:text-4xl text-gray-300 mb-6 font-medium">
-                <span className="text-white">AI/ML Engineer</span> & 
-                <br />
-                <span className="text-blue-400">DATA ANALYST</span>
-              </h2>
-            </div>
+            <h1
+              className={`font-display text-6xl md:text-8xl font-bold text-white leading-[0.95] mb-6 transition-all duration-700 delay-200 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              Anmol
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-600">
+                Airi
+              </span>
+            </h1>
 
-            {/* Description */}
-            <div className={`transform transition-all duration-1000 delay-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-2xl">
-                Dynamic Computer Science student specializing in{' '}
-                <span className="text-blue-400 font-semibold">machine learning</span> and{' '}
-                <span className="text-purple-400 font-semibold">frontend development</span>. 
-                Building AI-driven solutions with cutting-edge technologies.
-              </p>
-            </div>
-            
-            {/* Buttons */}
-            <div className={`flex flex-col sm:flex-row gap-4 mb-8 transform transition-all duration-1000 delay-900 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <button 
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
-              >
-                <Play className="w-5 h-5 group-hover:animate-pulse" />
-                <span>View Projects</span>
-              </button>
-              <button 
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
-              >
-                <Mail className="w-5 h-5 group-hover:animate-bounce" />
-                <span>Get In Touch</span>
-              </button>
-            </div>
-            
-            {/* Social Links */}
-            <div className={`flex space-x-6 transform transition-all duration-1000 delay-1100 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              {[
-                { href: "https://github.com/anmolairi03/", icon: Github, label: "GitHub" },
-                { href: "http://www.linkedin.com/in/anmol809", icon: Linkedin, label: "LinkedIn" },
-                { href: "https://leetcode.com/u/zeus408809/", icon: Code, label: "LeetCode" },
-                { href: "mailto:anmolandanay@gmail.com", icon: Mail, label: "Email" }
-              ].map((social, index) => (
-                <a 
-                  key={index}
-                  href={social.href} 
-                  target="_blank" 
-                  className="group relative p-3 bg-slate-800/50 border border-slate-700 rounded-full text-gray-400 hover:text-white hover:border-blue-400 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
-                  aria-label={social.label}
+            <h2
+              className={`text-2xl md:text-3xl text-gray-200 font-medium mb-6 h-10 transition-all duration-700 delay-300 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              I build{' '}
+              <span key={roleIndex} className="gold-text inline-block animate-[fadeIn_0.5s_ease]">
+                {roles[roleIndex]}
+              </span>
+            </h2>
+
+            <p
+              className={`text-gray-400 text-lg leading-relaxed max-w-xl mb-10 transition-all duration-700 delay-[400ms] ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              CSE graduate specializing in <span className="text-gray-200">applied AI</span>:
+              shipping LLM apps, RAG pipelines, and Python/FastAPI backends across two internships.
+              I bring the discipline of a national-level athlete to every line of code.
+              <span className="block mt-3 text-sm text-gray-500">
+                Curious how I actually build these systems?{' '}
+                <button
+                  type="button"
+                  onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="gold-text underline underline-offset-4 hover:text-gold-300"
                 >
-                  <social.icon size={20} className="group-hover:animate-pulse" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </a>
-              ))}
+                  Walk through my process ↓
+                </button>
+              </span>
+            </p>
+
+            {/* CTAs */}
+            <div
+              className={`flex flex-wrap gap-4 mb-12 transition-all duration-700 delay-500 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <button
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group neu-interactive px-7 py-4 rounded-2xl font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500 flex items-center gap-2"
+                style={{ boxShadow: '6px 6px 12px #191b21, -6px -6px 12px #2d313b' }}
+              >
+                View my work
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </button>
+              <button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="neu-interactive px-7 py-4 rounded-2xl font-semibold text-gray-200 flex items-center gap-2"
+              >
+                <Mail className="w-5 h-5 gold-text" />
+                Get in touch
+              </button>
+            </div>
+
+            {/* Stats + socials */}
+            <div
+              className={`flex flex-wrap items-center gap-8 transition-all duration-700 delay-[600ms] ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <div className="flex gap-6">
+                {stats.map((s) => (
+                  <div key={s.label}>
+                    <div className="font-display text-2xl font-bold text-white">{s.value}</div>
+                    <div className="text-xs text-gray-500">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-3">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    className="neu-interactive w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-gold-400"
+                  >
+                    <s.icon size={18} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Hero Visual */}
+          {/* Right: avatar in a neumorphic well */}
           <div className="relative flex justify-center items-center">
-            <div className={`relative transform transition-all duration-1500 delay-300 ${isLoaded ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}>
-              {/* 3D Character */}
-              <ThreeAvatar 
-                mousePosition={mousePosition} 
-                onWave={() => console.log('Avatar is waving!')}
-              />
-              
-              {/* Floating Tech Icons around character */}
-              {techStack.map((tech, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`absolute w-14 h-14 bg-slate-800/80 border border-slate-600 rounded-full flex items-center justify-center backdrop-blur-sm transform transition-all duration-1000 hover:scale-125 hover:bg-blue-500/20 hover:border-blue-400 group cursor-pointer animate-orbit`}
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      marginLeft: '-1.75rem',
-                      marginTop: '-1.75rem',
-                      animationDelay: `${index * -3.33}s`, // Distribute icons evenly around the circle
-                      animationDuration: '20s'
-                    }}
-                  >
-                    <tech.icon className={`w-6 h-6 ${tech.color} group-hover:animate-bounce`} />
-                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                      {tech.name}
-                    </div>
-                  </div>
-                );
-              })}
+            <div
+              className={`relative rounded-full p-6 neu-inset transition-all duration-1000 ${
+                isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+              }`}
+            >
+              <ThreeAvatar mousePosition={mousePosition} onWave={() => {}} />
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Scroll Indicator */}
-      <button
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-blue-400 transition-all duration-300 group animate-bounce"
-      >
-        <div className="flex flex-col items-center space-y-2">
-          <span className="text-xs text-gray-400 group-hover:text-blue-400 transition-colors duration-300">Explore</span>
-          <div className="w-6 h-10 border-2 border-gray-400 group-hover:border-blue-400 rounded-full flex justify-center transition-colors duration-300">
-            <div className="w-1 h-3 bg-gray-400 group-hover:bg-blue-400 rounded-full mt-2 animate-pulse transition-colors duration-300"></div>
-          </div>
-        </div>
-      </button>
     </section>
   );
 };

@@ -10,150 +10,112 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
   const navItems = [
     { id: 'hero', label: 'Home' },
     { id: 'about', label: 'About' },
+    { id: 'process', label: 'Process' },
+    { id: 'journey', label: 'Story' },
     { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'projects', label: 'Work' },
     { id: 'experience', label: 'Experience' },
     { id: 'contact', label: 'Contact' },
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled 
-        ? 'bg-slate-900/95 backdrop-blur-lg shadow-2xl border-b border-slate-700/50' 
-        : 'bg-transparent'
-    }`}>
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+    <header className="fixed top-4 left-0 right-0 z-50 px-4">
+      <div
+        className={`container mx-auto rounded-2xl transition-all duration-500 ${
+          isScrolled ? 'neu-raised' : 'bg-transparent'
+        }`}
+      >
+        <div className="flex items-center justify-between px-5 py-3">
           {/* Logo */}
-          <div className="relative group">
-            <div className="text-2xl font-bold text-white transition-all duration-300 transform group-hover:scale-105">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                Anmol
-              </span>
-              <span className="text-white ml-3">Airi</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-          </div>
+          <button
+            onClick={() => scrollToSection('hero')}
+            className="flex items-center gap-2 group"
+          >
+            <span className="w-9 h-9 rounded-xl neu-inset flex items-center justify-center font-display font-bold gold-text">
+              A
+            </span>
+            <span className="font-display font-bold text-lg text-white hidden sm:block">
+              Anmol<span className="gold-text">.</span>
+            </span>
+          </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item, index) => (
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="relative group px-6 py-3 text-sm font-medium transition-all duration-300 transform hover:-translate-y-1"
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  activeSection === item.id
+                    ? 'neu-inset gold-text'
+                    : 'text-gray-400 hover:text-white'
+                }`}
               >
-                {/* Text */}
-                <span className={`relative z-10 transition-all duration-300 ${
-                  activeSection === item.id 
-                    ? 'text-blue-400' 
-                    : 'text-gray-300 group-hover:text-white'
-                }`}>
-                  {item.label}
-                </span>
-                
-                {/* Animated Background */}
-                <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg transform transition-all duration-300 ${
-                  activeSection === item.id 
-                    ? 'scale-100 opacity-100' 
-                    : 'scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100'
-                }`}></div>
-                
-                {/* Glowing Border */}
-                <div className={`absolute inset-0 border border-blue-400/30 rounded-lg transform transition-all duration-300 ${
-                  activeSection === item.id 
-                    ? 'scale-100 opacity-100' 
-                    : 'scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100'
-                }`}></div>
-                
-                {/* Animated Underline */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 transition-all duration-500 ease-out group-hover:shadow-lg group-hover:shadow-blue-400/50"
-                     style={{
-                       width: activeSection === item.id ? '80%' : '0%',
-                       ...(activeSection !== item.id && {
-                         width: '0%',
-                         transition: 'width 0.3s ease-out'
-                       })
-                     }}
-                     onMouseEnter={(e) => {
-                       if (activeSection !== item.id) {
-                         e.currentTarget.style.width = '80%';
-                       }
-                     }}
-                     onMouseLeave={(e) => {
-                       if (activeSection !== item.id) {
-                         e.currentTarget.style.width = '0%';
-                       }
-                     }}
-                ></div>
-                
-                {/* Glow Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur-xl transition-all duration-300 ${
-                  activeSection === item.id 
-                    ? 'opacity-100' 
-                    : 'opacity-0 group-hover:opacity-100'
-                } -z-10`}></div>
+                {item.label}
               </button>
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* CTA */}
+          <a
+            href="/Anmol_Airi_Resume_Data_Analyst.pdf"
+            download="Anmol_Airi_Resume.pdf"
+            className="hidden md:inline-flex neu-interactive px-5 py-2.5 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500"
+            style={{ boxShadow: '5px 5px 10px #1b1d23, -5px -5px 10px #2b2f37' }}
+          >
+            Résumé
+          </a>
+
+          {/* Mobile toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative p-3 text-white hover:text-blue-400 transition-colors duration-300 group"
+            className="md:hidden neu-interactive w-10 h-10 rounded-xl flex items-center justify-center text-gray-300"
+            aria-label="Toggle menu"
           >
-            <div className="absolute inset-0 bg-slate-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative z-10">
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </div>
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <nav className="pt-4 pb-2 border-t border-slate-700/50 mt-4">
-            <div className="flex flex-col space-y-2">
-              {navItems.map((item, index) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`relative group text-left px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 transform hover:translate-x-2 ${
-                    activeSection === item.id 
-                      ? 'text-blue-400 bg-blue-500/10 border-l-2 border-blue-400' 
-                      : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
-                  }`}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg transform transition-all duration-300 ${
-                    activeSection === item.id 
-                      ? 'scale-100 opacity-100' 
-                      : 'scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100'
-                  }`}></div>
-                </button>
-              ))}
-            </div>
+        {/* Mobile nav */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-500 ${
+            isMenuOpen ? 'max-h-[28rem] opacity-100 pb-4' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <nav className="flex flex-col gap-1.5 px-3">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  activeSection === item.id
+                    ? 'neu-inset gold-text'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <a
+              href="/Anmol_Airi_Resume_Data_Analyst.pdf"
+              download="Anmol_Airi_Resume.pdf"
+              className="mt-2 text-center px-4 py-3 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500"
+            >
+              Download résumé
+            </a>
           </nav>
         </div>
       </div>

@@ -4,15 +4,131 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
-  
+
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  /* Comfortable tap targets on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    a[href] {
+      min-height: 40px;
+    }
+  }
+
+  :root {
+    --surface: #23262e;
+    --shadow-dark: #191b21;
+    --shadow-light: #2d313b;
+    --ink-primary: #ffffff;
+    --ink-secondary: #d1d5db;
+    --ink-muted: #6b7280;
+    --accent: #e9ac3f;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    /* Light snap only: keeps flow smooth without fighting the sticky stories */
+    scroll-snap-type: y proximity;
+  }
+
+  body {
+    font-family: 'Sora', system-ui, -apple-system, sans-serif;
+    background-color: #23262e;
+    color: #e6e8ec;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Custom neumorphic scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1c1f25;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2d313b;
+    border-radius: 8px;
+    border: 3px solid #1c1f25;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #e9ac3f;
+  }
+
+  ::selection {
+    background: rgba(233, 172, 63, 0.3);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* ---- Neumorphism system (charcoal #23262e base) ---- */
+  .neu-surface {
+    background: var(--surface);
+  }
+
+  .neu-raised {
+    background: var(--surface);
+    box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+  }
+
+  .neu-raised-sm {
+    background: var(--surface);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+  }
+
+  .neu-inset {
+    background: var(--surface);
+    box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+  }
+
+  .neu-pressed {
+    box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+  }
+
+  /* Interactive raised element that presses in on hover */
+  .neu-interactive {
+    background: var(--surface);
+    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  }
+  .neu-interactive:hover {
+    box-shadow: 3px 3px 8px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
+    transform: translateY(-2px);
+  }
+  .neu-interactive:active {
+    box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+    transform: translateY(0);
+  }
+
+  /* Accent gold chip / pill baseline */
+  .gold-text {
+    color: #e9ac3f;
   }
 }
 
 @layer utilities {
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* Orbit animation for tech stack icons */
   @keyframes orbit {
     from { 
@@ -539,5 +655,320 @@
 
   .animate-slide-in-down {
     animation: slideInDown 0.8s ease-out;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-story system
+   Inspired by editorial carousel pacing: each section is a scene, while the
+   fixed segmented rail shows position through the complete résumé narrative.
+   -------------------------------------------------------------------------- */
+main > section {
+  min-height: min(100vh, 980px);
+  scroll-margin-top: 5rem;
+  scroll-snap-align: start;
+  isolation: isolate;
+  transition: background-color 0.7s ease;
+}
+
+main > section#process,
+main > section#journey {
+  min-height: 0;
+  scroll-snap-align: none;
+}
+
+main > section::after {
+  content: '';
+  position: absolute;
+  inset: auto 4vw 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+  pointer-events: none;
+}
+
+/* ---- Per-section palettes ------------------------------------------------
+   Skills / Work / Experience keep their distinct ivory / sand / red looks.
+   Hero and supporting sections stay on charcoal + gold.
+   ------------------------------------------------------------------------ */
+[data-theme='core'] {
+  --surface: #23262e;
+  --shadow-dark: #191b21;
+  --shadow-light: #2d313b;
+  --ink-primary: #f0f2f5;
+  --ink-secondary: #b8bec8;
+  --ink-muted: #7a8290;
+  --accent: #e9ac3f;
+}
+
+[data-theme='soft'] {
+  --surface: #252830;
+  --shadow-dark: #1b1e24;
+  --shadow-light: #2f333c;
+  --ink-primary: #f0f2f5;
+  --ink-secondary: #b8bec8;
+  --ink-muted: #7a8290;
+  --accent: #e9ac3f;
+}
+
+[data-theme='muted'] {
+  --surface: #232a28;
+  --shadow-dark: #1a201e;
+  --shadow-light: #2c3532;
+  --ink-primary: #eef4f1;
+  --ink-secondary: #b5c4bd;
+  --ink-muted: #7a8c84;
+  --accent: #e9ac3f;
+}
+
+[data-theme='ivory'] {
+  --surface: #e9e5da;
+  --shadow-dark: #c7c2b6;
+  --shadow-light: #fffdf4;
+  --ink-primary: #171713;
+  --ink-secondary: #37372f;
+  --ink-muted: #6f6d63;
+  --accent: #a83325;
+}
+
+[data-theme='sand'] {
+  --surface: #e6dac6;
+  --shadow-dark: #c5b9a4;
+  --shadow-light: #fdf5e6;
+  --ink-primary: #1b1710;
+  --ink-secondary: #3d3527;
+  --ink-muted: #75694f;
+  --accent: #b4552a;
+}
+
+[data-theme='red'] {
+  --surface: #be332b;
+  --shadow-dark: #97251f;
+  --shadow-light: #e64238;
+  --ink-primary: #fff8e8;
+  --ink-secondary: #f6d9d2;
+  --ink-muted: #eab6ad;
+  --accent: #fff0ba;
+}
+
+[data-theme] {
+  background: var(--surface) !important;
+  transition: background-color 0.7s ease;
+}
+
+/* Tailwind utility remapping so one markup set works in every palette. */
+[data-theme] .text-white,
+[data-theme] .text-gray-200 {
+  color: var(--ink-primary) !important;
+}
+[data-theme] .text-gray-300,
+[data-theme] .text-gray-400 {
+  color: var(--ink-secondary) !important;
+}
+[data-theme] .text-gray-500,
+[data-theme] .text-gray-600 {
+  color: var(--ink-muted) !important;
+}
+[data-theme] .gold-text,
+[data-theme] .text-gold-400,
+[data-theme] .text-teal-400 {
+  color: var(--accent) !important;
+}
+[data-theme] .border-white\/5 {
+  border-color: color-mix(in srgb, var(--ink-primary) 12%, transparent) !important;
+}
+[data-theme] .from-gold-400 {
+  --tw-gradient-from: var(--accent) !important;
+}
+[data-theme] .to-gold-500 {
+  --tw-gradient-to: color-mix(in srgb, var(--accent) 82%, #000) !important;
+}
+[data-theme] .text-ink-base {
+  color: var(--surface) !important;
+}
+
+[data-theme]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.16;
+  pointer-events: none;
+  background-image: radial-gradient(currentColor 0.7px, transparent 0.7px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* Oversized editorial words create OSOS-like scene breaks without copying it. */
+.scroll-word {
+  position: absolute;
+  right: -0.03em;
+  top: 0.08em;
+  z-index: -1;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(7rem, 20vw, 20rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.09em;
+  color: currentColor;
+  opacity: 0.035;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(4%);
+}
+
+/* Fixed bottom narrative progress. */
+.scroll-rail {
+  position: fixed;
+  z-index: 80;
+  left: 1rem;
+  right: 1rem;
+  bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.65rem 0.75rem 0.75rem;
+  color: #f7f2e8;
+  background: rgba(14, 15, 18, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.scroll-rail__meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0.15rem 0.45rem;
+  color: rgba(255, 255, 255, 0.52);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+}
+
+.scroll-rail__track {
+  position: relative;
+  height: 2.45rem;
+  overflow: hidden;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.scroll-rail__fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #f5f0e6;
+  transform-origin: left center;
+  transition: transform 80ms linear;
+}
+
+.scroll-rail__segments {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.scroll-rail__segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0 0.35rem;
+  color: #f5f0e6;
+  border-right: 1px solid rgba(0, 0, 0, 0.22);
+  font-family: 'Space Mono', monospace;
+  mix-blend-mode: difference;
+}
+
+.scroll-rail__segment:last-child {
+  border-right: 0;
+}
+
+.scroll-rail__segment span {
+  font-size: 0.55rem;
+  opacity: 0.55;
+}
+
+.scroll-rail__segment strong {
+  overflow: hidden;
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scroll-rail__segment.is-active strong {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+/* More cinematic entry than the old card-pop animation. */
+.scroll-animate {
+  transition-duration: 1.05s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile (Android + iOS) tuning
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  html {
+    /* iOS Safari/Chrome fight scroll-snap during momentum scrolling */
+    scroll-snap-type: none;
+  }
+
+  main > section {
+    min-height: auto;
+    scroll-snap-align: none;
+    scroll-margin-top: 4.5rem;
+  }
+
+  .scroll-word {
+    font-size: clamp(4.5rem, 26vw, 9rem);
+    opacity: 0.05;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-rail {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.5rem 0.5rem 0.55rem;
+  }
+
+  .scroll-rail__track {
+    /* keep tap targets at/near 44px */
+    height: 2.75rem;
+  }
+
+  .scroll-rail__segment {
+    padding: 0 0.15rem;
+  }
+
+  .scroll-rail__segment strong {
+    display: none;
+  }
+
+  .scroll-rail__segment span {
+    font-size: 0.68rem;
+    opacity: 0.9;
+  }
+}
+
+/* Hover effects misfire on touch: only lift where hover truly exists. */
+@media (hover: none) {
+  .neu-interactive:hover {
+    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-rail__fill,
+  .scroll-animate {
+    transition: none !important;
   }
 }

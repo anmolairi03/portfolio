@@ -1,29 +1,53 @@
 import React from 'react';
-import { Heart, Github, Linkedin, Mail, Code } from 'lucide-react';
+import { Github, Linkedin, Mail, Code2, ArrowUp } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const socials = [
+    { href: 'https://github.com/anmolairi03/', icon: Github, label: 'GitHub' },
+    { href: 'http://www.linkedin.com/in/anmol809', icon: Linkedin, label: 'LinkedIn' },
+    { href: 'https://leetcode.com/u/zeus408809/', icon: Code2, label: 'LeetCode' },
+    { href: 'mailto:anmolandanay@gmail.com', icon: Mail, label: 'Email' },
+  ];
+
   return (
-    <footer className="bg-slate-900 border-t border-slate-700 py-8">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-400 mb-4 md:mb-0">
-            <p>&copy; 2024 Anmol Airi. All rights reserved.</p>
+    <footer className="bg-ink-base pt-10 pb-28" data-theme="core">
+      <div className="container mx-auto px-6 lg:px-10">
+        <div className="neu-raised rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-center md:text-left">
+            <p className="font-display font-bold text-white text-lg">
+              Anmol Airi<span className="gold-text">.</span>
+            </p>
+            <p className="text-gray-500 text-sm mt-1">
+              AI Engineer &amp; Backend Developer · New Delhi, India
+            </p>
           </div>
-          <div className="flex space-x-4">
-            <a href="https://github.com/anmolairi03/" target="_blank" className="text-gray-400 hover:text-white transition-colors duration-200 transform hover:scale-110">
-              <Github size={20} />
-            </a>
-            <a href="http://www.linkedin.com/in/anmol809" target="_blank" className="text-gray-400 hover:text-white transition-colors duration-200 transform hover:scale-110">
-              <Linkedin size={20} />
-            </a>
-            <a href="https://leetcode.com/anmolairi03" target="_blank" className="text-gray-400 hover:text-white transition-colors duration-200 transform hover:scale-110">
-              <Code size={20} />
-            </a>
-            <a href="mailto:anmolandanay@gmail.com" className="text-gray-400 hover:text-white transition-colors duration-200 transform hover:scale-110">
-              <Mail size={20} />
-            </a>
+
+          <div className="flex items-center gap-3">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.label}
+                className="neu-interactive w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-gold-400"
+              >
+                <s.icon size={18} />
+              </a>
+            ))}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              aria-label="Back to top"
+              className="neu-interactive w-11 h-11 rounded-xl flex items-center justify-center gold-text ml-1"
+            >
+              <ArrowUp size={18} />
+            </button>
           </div>
         </div>
+
+        <p className="text-center text-gray-600 text-xs mt-6">
+          © {new Date().getFullYear()} Anmol Airi · Built with React, Three.js &amp; a lot of consistency.
+        </p>
       </div>
     </footer>
   );
