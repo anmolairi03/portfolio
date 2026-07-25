@@ -1402,49 +1402,6 @@ main > section::after {
   }
 }
 
-
-/* Words flying in from sides on scroll */
-.scroll-fly {
-  position: fixed;
-  inset: 0;
-  z-index: 6;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.scroll-fly__word {
-  position: absolute;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.4rem, 4vw, 3rem);
-  letter-spacing: -0.04em;
-  color: #be332b;
-  text-shadow: 0 2px 0 rgba(255, 248, 232, 0.35);
-  transition: opacity 0.2s linear;
-  white-space: nowrap;
-}
-
-.scroll-fly__word--left {
-  left: 4%;
-  animation: flyInLeft 0.85s cubic-bezier(0.34, 1.45, 0.64, 1) both;
-}
-
-.scroll-fly__word--right {
-  right: 4%;
-  animation: flyInRight 0.85s cubic-bezier(0.34, 1.45, 0.64, 1) both;
-  color: #e9ac3f;
-}
-
-@keyframes flyInLeft {
-  from { transform: translateX(-120%) rotate(-6deg); opacity: 0; }
-  to { transform: translateX(0) rotate(-2deg); opacity: 1; }
-}
-
-@keyframes flyInRight {
-  from { transform: translateX(120%) rotate(6deg); opacity: 0; }
-  to { transform: translateX(0) rotate(2deg); opacity: 1; }
-}
-
 /* Tools section playful cards + chips */
 .tools-card {
   padding: 1.25rem 1.35rem;
@@ -1495,10 +1452,6 @@ main > section::after {
   .tools-float {
     display: none;
   }
-
-  .scroll-fly__word {
-    font-size: 1.1rem;
-  }
 }
 
 /* Scroll bounce leftovers — linked mode owns transform via JS */
@@ -1543,9 +1496,6 @@ main > section::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-fly {
-    opacity: 0.5;
-  }
 }
 
 /* More cinematic entry than the old card-pop animation. */
