@@ -1402,20 +1402,6 @@ main > section::after {
   }
 }
 
-/* Colored bouncy orbs on scroll */
-.scroll-orbs {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  opacity: 0.9;
-}
-
-.story-film .scroll-orbs {
-  mix-blend-mode: soft-light;
-  opacity: 0.75;
-}
 
 /* Words flying in from sides on scroll */
 .scroll-fly {
@@ -1557,7 +1543,6 @@ main > section::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-orbs,
   .scroll-fly {
     opacity: 0.5;
   }
