@@ -15,6 +15,18 @@ interface Body {
   downT: number;
 }
 
+/** Y floor in layer coords: sit just above the bottom scroll-rail with a small gap. */
+function debrisFloorY(root: HTMLElement): number {
+  const layerTop = root.getBoundingClientRect().top;
+  const rail = document.querySelector('.scroll-rail') as HTMLElement | null;
+  if (rail) {
+    const gap = 14;
+    return Math.max(80, rail.getBoundingClientRect().top - layerTop - gap);
+  }
+  // Fallback if the rail is missing: reserve ~7.5rem for bottom chrome
+  return root.clientHeight - 120;
+}
+
 /**
  * Fixed overlay of interactive glass shards after the Why smash.
  * Double-click removes a shard; single click/drag throws — shards stay until swept.
@@ -92,8 +104,9 @@ const GlassDebrisLayer: React.FC = () => {
         const r = root.getBoundingClientRect();
         const px = e.clientX - r.left;
         const py = e.clientY - r.top;
+        const floor = debrisFloorY(root);
         body!.spec.x = Math.min(r.width - body!.spec.w, Math.max(0, px - body!.grabX));
-        body!.spec.y = Math.min(r.height - body!.spec.h, Math.max(0, py - body!.grabY));
+        body!.spec.y = Math.min(floor - body!.spec.h, Math.max(0, py - body!.grabY));
         const now = performance.now();
         const dt = Math.max(16, now - body!.lastT);
         body!.spec.vx = ((px - body!.lastX) / dt) * 16;
@@ -117,7 +130,6 @@ const GlassDebrisLayer: React.FC = () => {
         } catch {
           /* ignore */
         }
-        // Single click no longer despawns — shards were vanishing too fast.
       });
 
       el.addEventListener('dblclick', (e) => {
@@ -155,8 +167,7 @@ const GlassDebrisLayer: React.FC = () => {
       const dt = Math.min(32, now - t0) / 16;
       t0 = now;
       const rw = root.clientWidth;
-      const rh = root.clientHeight;
-      const floor = rh - 36;
+      const floor = debrisFloorY(root);
 
       bodiesRef.current.forEach((body) => {
         if (body.dragging) return;
