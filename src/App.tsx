@@ -12,7 +12,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import StorySpine from './components/StorySpine';
-import ScrollOrbs from './components/ScrollOrbs';
 import ScrollFlyText from './components/ScrollFlyText';
 import ScrollDriftBands from './components/ScrollDriftBands';
 import GlassDebrisLayer from './components/GlassDebrisLayer';
@@ -47,7 +46,6 @@ function Portfolio() {
       >
         <Header activeSection={activeId} />
         <StorySpine progress={progress} activeId={activeId} />
-        <ScrollOrbs />
         <ScrollFlyText />
         <ScrollDriftBands />
         <GlassDebrisLayer />
