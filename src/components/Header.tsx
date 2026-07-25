@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { safeHref } from '../hooks/useRoute';
+import { SITE_LINKS } from '../story/links';
 import { Menu, X } from 'lucide-react';
 import { STORY_CHAPTERS } from '../story/chapters';
 
@@ -57,8 +59,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
           </nav>
 
           <a
-            href="/Anmol_Airi_Resume_Data_Analyst.pdf"
-            download="Anmol_Airi_Resume.pdf"
+            href={safeHref(SITE_LINKS.resume)}
+            download={SITE_LINKS.resume ? 'Anmol_Airi_Resume.pdf' : undefined}
             className="hidden md:inline-flex neu-interactive px-5 py-2.5 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500"
             style={{ boxShadow: '5px 5px 10px #1b1d23, -5px -5px 10px #2b2f37' }}
           >
@@ -94,8 +96,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
               </button>
             ))}
             <a
-              href="/Anmol_Airi_Resume_Data_Analyst.pdf"
-              download="Anmol_Airi_Resume.pdf"
+              href={safeHref(SITE_LINKS.resume)}
+              download={SITE_LINKS.resume ? 'Anmol_Airi_Resume.pdf' : undefined}
               className="mt-2 text-center px-4 py-3 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500"
             >
               Download resume

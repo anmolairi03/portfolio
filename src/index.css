@@ -2371,3 +2371,574 @@ main > section::after {
     animation: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Site boot loader
+   -------------------------------------------------------------------------- */
+body.is-booting {
+  overflow: hidden;
+  height: 100%;
+}
+
+.story-film.is-site-booting {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.story-film.is-site-ready {
+  opacity: 1;
+  transition: opacity 0.45s ease 0.05s;
+}
+
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 40%, rgba(233, 172, 63, 0.08), transparent 60%),
+    #23262e;
+  color: #e6e8ec;
+  transition: opacity 0.55s ease, visibility 0.55s ease;
+}
+
+.site-loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-loader__panel {
+  text-align: center;
+  padding: 1.5rem;
+  max-width: 22rem;
+  width: min(90vw, 22rem);
+}
+
+.site-loader__brand {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #e9ac3f;
+  margin: 0 0 1.25rem;
+}
+
+.site-loader__title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.65rem;
+  color: #fff;
+}
+
+.site-loader__sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(209, 213, 219, 0.65);
+  margin: 0 0 1.75rem;
+}
+
+.site-loader__track {
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.site-loader__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c48a2a, #e9ac3f);
+  transition: width 0.35s ease;
+}
+
+.site-loader__pct {
+  margin: 0.85rem 0 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: rgba(209, 213, 219, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader,
+  .story-film.is-site-ready,
+  .site-loader__fill {
+    transition: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   404 / error page — light sheet, site typography
+   -------------------------------------------------------------------------- */
+.notfound {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.5rem;
+  background: #ffffff;
+  color: #23262e;
+}
+
+.notfound__inner {
+  width: min(64rem, 100%);
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.notfound__art {
+  margin: 0;
+  width: min(34rem, 100%);
+}
+
+.notfound__art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.notfound__code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.9rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(233, 172, 63, 0.14);
+  border: 1px solid rgba(196, 138, 42, 0.35);
+  color: #8a5f16;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.notfound__title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.75rem;
+  color: #16181d;
+}
+
+.notfound__body {
+  margin: 0 auto;
+  max-width: 34rem;
+  color: #545a66;
+  line-height: 1.6;
+}
+
+.notfound__detail {
+  margin: 1rem auto 0;
+  max-width: 34rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.5rem;
+  background: #f4f5f7;
+  border: 1px solid #e3e6ea;
+  color: #6b7280;
+  font-size: 0.7rem;
+  word-break: break-word;
+}
+
+.notfound__actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.notfound__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e3e8;
+  background: #fff;
+  color: #23262e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.notfound__btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(196, 138, 42, 0.5);
+  box-shadow: 0 8px 20px rgba(35, 38, 46, 0.08);
+}
+
+.notfound__btn--primary {
+  background: linear-gradient(90deg, #c48a2a, #e9ac3f);
+  border-color: transparent;
+  color: #23262e;
+}
+
+@media (min-width: 900px) {
+  .notfound__inner {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    text-align: left;
+    gap: 3rem;
+  }
+
+  .notfound__actions {
+    justify-content: flex-start;
+  }
+
+  .notfound__body,
+  .notfound__detail {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notfound__btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Boot loader: mini game + enter gate
+   -------------------------------------------------------------------------- */
+.site-loader__panel {
+  width: min(94vw, 25rem);
+  max-height: 92svh;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.site-loader__fill.is-full {
+  background: linear-gradient(90deg, #3fa66a, #62d39a);
+}
+
+.spark-game {
+  margin: 1.5rem 0 0.25rem;
+}
+
+.spark-game__hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  color: rgba(209, 213, 219, 0.6);
+}
+
+.spark-game__lives {
+  color: #e9ac3f;
+  letter-spacing: 0.12em;
+}
+
+.spark-game__lives-dim {
+  color: rgba(255, 255, 255, 0.14);
+}
+
+.spark-game__stage {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #1c1f26;
+  cursor: none;
+  touch-action: none;
+  outline: none;
+}
+
+.spark-game__stage:focus-visible {
+  border-color: rgba(233, 172, 63, 0.55);
+}
+
+.spark-game__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 360 / 260;
+}
+
+.spark-game__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 0.35rem;
+  background: rgba(28, 31, 38, 0.82);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+.spark-game__overlay-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.spark-game__overlay-sub {
+  margin: 0;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(209, 213, 219, 0.6);
+}
+
+.spark-game__btn {
+  margin-top: 0.7rem;
+  justify-self: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(233, 172, 63, 0.45);
+  background: rgba(233, 172, 63, 0.12);
+  color: #e9ac3f;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.spark-game__btn:hover {
+  background: rgba(233, 172, 63, 0.22);
+  transform: translateY(-1px);
+}
+
+.spark-game__help {
+  margin: 0.5rem 0 0;
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(209, 213, 219, 0.35);
+}
+
+.site-loader__enter {
+  margin-top: 1.35rem;
+}
+
+.site-loader__enter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 0.8rem;
+  background: linear-gradient(90deg, #c48a2a, #e9ac3f);
+  color: #23262e;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.site-loader__enter-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(233, 172, 63, 0.28);
+}
+
+.site-loader__enter-btn:disabled {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(209, 213, 219, 0.45);
+  cursor: not-allowed;
+}
+
+.site-loader__enter-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(209, 213, 219, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader__enter-btn,
+  .spark-game__btn {
+    transition: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small screens: loader, mini game, 404 (Android / iPhone / short viewports)
+   -------------------------------------------------------------------------- */
+.site-loader {
+  padding:
+    calc(0.75rem + env(safe-area-inset-top, 0px))
+    calc(0.75rem + env(safe-area-inset-right, 0px))
+    calc(0.75rem + env(safe-area-inset-bottom, 0px))
+    calc(0.75rem + env(safe-area-inset-left, 0px));
+}
+
+.site-loader__panel {
+  /* Keep the whole panel reachable when the phone keyboard/URL bar shrinks the view */
+  max-height: calc(100svh - 1.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Phones: tighten vertical rhythm so the game + button always fit */
+@media (max-width: 640px) {
+  .site-loader__panel {
+    padding: 1rem;
+  }
+
+  .site-loader__brand {
+    margin-bottom: 0.75rem;
+  }
+
+  .site-loader__title {
+    font-size: clamp(1.35rem, 6.5vw, 1.75rem);
+  }
+
+  .site-loader__sub {
+    margin-bottom: 1rem;
+    font-size: 0.66rem;
+  }
+
+  .spark-game {
+    margin-top: 1rem;
+  }
+
+  .site-loader__enter {
+    margin-top: 1rem;
+  }
+}
+
+/* Short/landscape phones: shrink the play field instead of clipping it */
+@media (max-height: 700px) {
+  .site-loader__title {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .site-loader__sub {
+    margin-bottom: 0.85rem;
+  }
+
+  .spark-game__canvas {
+    aspect-ratio: 360 / 190;
+  }
+}
+
+@media (max-height: 560px) {
+  .spark-game__canvas {
+    aspect-ratio: 360 / 150;
+  }
+
+  .spark-game__help,
+  .site-loader__enter-note {
+    display: none;
+  }
+}
+
+/* Touch devices: no hover cursor tricks, bigger tap targets */
+@media (hover: none) and (pointer: coarse) {
+  .spark-game__stage {
+    cursor: default;
+  }
+
+  .spark-game__btn {
+    padding: 0.7rem 1.15rem;
+    font-size: 0.66rem;
+  }
+
+  .site-loader__enter-btn {
+    padding: 0.95rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* 404 page on phones */
+@media (max-width: 640px) {
+  .notfound {
+    padding:
+      calc(2rem + env(safe-area-inset-top, 0px))
+      1.15rem
+      calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .notfound__inner {
+    gap: 1.25rem;
+  }
+
+  .notfound__art {
+    width: min(20rem, 88%);
+  }
+
+  .notfound__title {
+    font-size: clamp(1.4rem, 7vw, 1.9rem);
+  }
+
+  .notfound__body {
+    font-size: 0.92rem;
+  }
+
+  .notfound__actions {
+    margin-top: 1.25rem;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .notfound__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.15rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile overflow guard
+   Decorative travel words / drift bands sit outside the viewport by design.
+   `clip` stops them creating a horizontal scroll without breaking sticky
+   scenes the way `hidden` would.
+   -------------------------------------------------------------------------- */
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.story-main,
+.story-film {
+  overflow-x: clip;
+}
+
+/* Keep the oversized chapter word inside the screen on phones */
+@media (max-width: 900px) {
+  .scroll-word--travel {
+    max-width: 92vw;
+    overflow: hidden;
+  }
+}
+
+/* Loader: let the overlay itself scroll so the Enter button is always reachable
+   (landscape phones ~360px tall could not reach it). */
+.site-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.site-loader__panel {
+  max-height: none;
+  overflow: visible;
+  margin: auto;
+  flex: 0 0 auto;
+}
