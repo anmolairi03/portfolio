@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -16,17 +16,35 @@ import ScrollOrbs from './components/ScrollOrbs';
 import ScrollFlyText from './components/ScrollFlyText';
 import ScrollDriftBands from './components/ScrollDriftBands';
 import GlassDebrisLayer from './components/GlassDebrisLayer';
+import LoadingScreen from './components/LoadingScreen';
+import NotFound from './components/NotFound';
+import ErrorBoundary from './components/ErrorBoundary';
 import { GlassDebrisProvider } from './context/GlassDebrisContext';
 import { useScrollBroker } from './hooks/useScrollBroker';
 import { useReducedMotion } from './hooks/useReducedMotion';
+import { useSiteReady } from './hooks/useSiteReady';
+import { isKnownPath, usePathname, useNotFoundReason } from './hooks/useRoute';
 
-function App() {
+function Portfolio() {
   const { progress, activeId } = useScrollBroker();
+  const { ready, progress: bootProgress } = useSiteReady();
+  const [entered, setEntered] = useState(false);
   useReducedMotion();
 
   return (
     <GlassDebrisProvider>
-      <div className="min-h-screen bg-ink-base story-film" data-active-chapter={activeId}>
+      {!entered && (
+        <LoadingScreen
+          ready={ready}
+          progress={bootProgress}
+          onEnter={() => setEntered(true)}
+        />
+      )}
+      <div
+        className={`min-h-screen bg-ink-base story-film ${entered ? 'is-site-ready' : 'is-site-booting'}`}
+        data-active-chapter={activeId}
+        aria-hidden={!entered}
+      >
         <Header activeSection={activeId} />
         <StorySpine progress={progress} activeId={activeId} />
         <ScrollOrbs />
@@ -48,6 +66,21 @@ function App() {
         <ScrollProgress progress={progress} activeId={activeId} />
       </div>
     </GlassDebrisProvider>
+  );
+}
+
+function App() {
+  const pathname = usePathname();
+  const reason = useNotFoundReason();
+
+  if (!isKnownPath(pathname)) {
+    return <NotFound reason={pathname === '/404' ? reason : 'route'} />;
+  }
+
+  return (
+    <ErrorBoundary>
+      <Portfolio />
+    </ErrorBoundary>
   );
 }
 

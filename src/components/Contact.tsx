@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Send, Github, Linkedin, Code2, Download, MapPin } from 'lucide-react';
+import { safeHref } from '../hooks/useRoute';
+import { SITE_LINKS } from '../story/links';
+import { Mail, Phone, Send, Github, Linkedin, Code2, Download, MapPin, Unplug } from 'lucide-react';
 import { STORY_CHAPTERS } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
 import TravelScrollWord from './TravelScrollWord';
@@ -86,13 +88,21 @@ const Contact: React.FC = () => {
             <div className="space-y-6">
               <div className="neu-raised rounded-3xl p-8">
                 <a
-                  href="/Anmol_Airi_Resume_Data_Analyst.pdf"
-                  download="Anmol_Airi_Resume.pdf"
+                  href={safeHref(SITE_LINKS.resume)}
+                  download={SITE_LINKS.resume ? 'Anmol_Airi_Resume.pdf' : undefined}
                   className="group neu-interactive w-full px-6 py-4 rounded-2xl font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500 flex items-center justify-center gap-2"
                   style={{ boxShadow: '6px 6px 12px #191b21, -6px -6px 12px #2d313b' }}
                 >
                   <Download className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
                   Download resume
+                </a>
+
+                <a
+                  href="/404?reason=route"
+                  className="mt-3 w-full px-6 py-3 rounded-2xl text-sm font-mono tracking-[0.14em] uppercase text-gray-400 border border-white/10 flex items-center justify-center gap-2 hover:gold-text hover:border-gold-400/40 transition-colors"
+                >
+                  <Unplug className="w-4 h-4" />
+                  Preview 404 page
                 </a>
               </div>
 
