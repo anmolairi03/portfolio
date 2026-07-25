@@ -1,6 +1,5 @@
-import React from 'react';
-import { Github, ArrowUpRight } from 'lucide-react';
-import StickyScene from './StickyScene';
+import React, { useState } from 'react';
+import { Github, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { STORY_CHAPTERS, type StageId } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
 import { ProjectSymbol, TechMark } from './TechMarks';
@@ -121,7 +120,7 @@ const Projects: React.FC = () => {
       </section>
 
       {PROJECTS.map((project, i) => (
-        <ProjectSticky key={project.id} project={project} theme={i === 0 ? 'sand' : 'ivory'} />
+        <ProjectSlides key={project.id} project={project} theme={i === 0 ? 'sand' : 'ivory'} />
       ))}
 
       <div className="pb-20 px-6 lg:px-10" data-theme="sand">
@@ -143,117 +142,158 @@ const Projects: React.FC = () => {
   );
 };
 
-const ProjectSticky: React.FC<{ project: ProjectChapter; theme: string }> = ({
+const ProjectSlides: React.FC<{ project: ProjectChapter; theme: string }> = ({
   project,
   theme,
 }) => {
   const beats = project.beats;
+  const [active, setActive] = useState(0);
+  const beat = beats[active];
+  const progress = beats.length > 1 ? active / (beats.length - 1) : 0;
+
+  const go = (dir: number) =>
+    setActive((i) => Math.min(beats.length - 1, Math.max(0, i + dir)));
+
+  const onKeyNav = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      go(1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      go(-1);
+    }
+  };
 
   return (
-    <StickyScene
-      count={beats.length}
-      heightPerChapter={90}
-      mobileHeightPerChapter={75}
-      theme={theme}
-      className="border-t border-white/5"
-    >
-      {({ active, progress, local, jumpTo }) => {
-        const beat = beats[active];
-        return (
-          <div className="h-full max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 pt-20 pb-16 flex items-center">
-            <div className="w-full grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-16 items-center">
-              <div key={`${project.id}-copy-${active}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <p className="font-mono text-xs gold-text tracking-wide">{project.index}</p>
-                  <span className="text-gray-600">·</span>
-                  <p className="font-mono text-xs text-gray-500">{project.tagline}</p>
-                </div>
-                <h3 className="font-display text-4xl sm:text-5xl font-bold text-white mb-3">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed mb-6 max-w-md">{project.problem}</p>
+    <section data-theme={theme} className="relative border-t border-white/5 py-20 md:py-28">
+      <div
+        className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 outline-none"
+        tabIndex={0}
+        role="group"
+        aria-roledescription="carousel"
+        aria-label={`${project.title} story beats`}
+        onKeyDown={onKeyNav}
+      >
+        <div className="w-full grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-16 items-center">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <p className="font-mono text-xs gold-text tracking-wide">{project.index}</p>
+              <span className="text-gray-600">·</span>
+              <p className="font-mono text-xs text-gray-500">{project.tagline}</p>
+            </div>
+            <h3 className="font-display text-4xl sm:text-5xl font-bold text-white mb-3">
+              {project.title}
+            </h3>
+            <p className="text-gray-400 leading-relaxed mb-6 max-w-md">{project.problem}</p>
 
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.stages.map((s) => (
-                    <span
-                      key={s}
-                      className="px-3 py-1 rounded-full border border-gold-400/30 font-mono text-[10px] tracking-wider uppercase gold-text"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
+            <div className="flex flex-wrap gap-2 mb-8">
+              {project.stages.map((s) => (
+                <span
+                  key={s}
+                  className="px-3 py-1 rounded-full border border-gold-400/30 font-mono text-[10px] tracking-wider uppercase gold-text"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
 
-                <div className="flex gap-2 mb-6">
-                  {beats.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => jumpTo(i)}
-                      aria-label={`Beat ${i + 1}`}
-                      className={`progress-dot h-1.5 rounded-full transition-all ${
-                        i === active ? 'progress-dot--active w-8' : 'w-3'
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                <div className="h-[3px] w-full max-w-xs bg-white/10 rounded-full mb-8">
-                  <div
-                    className="h-full bg-gold-400/80 rounded-full transition-[width] duration-150"
-                    style={{ width: `${((active + local) / beats.length) * 100}%` }}
-                  />
-                </div>
-
-                <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
-                  {beat.label}
-                </p>
-                <p className="text-xl sm:text-2xl text-gray-200 leading-snug font-light max-w-lg">
-                  {beat.text}
-                </p>
-
-                <div className="mt-8">
-                  <p className="text-sm text-gray-400 mb-4">{project.why}</p>
-                  <div className="flex flex-wrap gap-3">
-                    {project.stack.map((s) => (
-                      <div
-                        key={s}
-                        className="flex items-center gap-2 px-3 py-2 rounded-2xl neu-inset gold-text"
-                        title={s}
-                      >
-                        <TechMark name={s} className="w-7 h-7" />
-                        <span className="text-xs font-mono text-gray-300">{s}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {active === beats.length - 1 && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-5 inline-flex items-center gap-2 font-mono text-xs gold-text tracking-wide"
-                    >
-                      <Github size={14} /> View on GitHub
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div
-                className="relative aspect-square max-w-md mx-auto w-full"
-                style={{
-                  transform: `scale(${0.9 + progress * 0.1})`,
-                }}
+            <div className="flex items-center gap-4 mb-6">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                disabled={active === 0}
+                aria-label="Previous beat"
+                className="neu-interactive w-11 h-11 rounded-full flex items-center justify-center text-gray-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
               >
-                <div className="absolute inset-6 rounded-[2rem] neu-inset flex items-center justify-center p-8">
-                  <ProjectSymbol project={project.id} className="w-full h-full max-w-[280px]" />
-                </div>
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <div className="flex gap-2">
+                {beats.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={`Go to beat ${i + 1}`}
+                    aria-current={i === active}
+                    className={`progress-dot h-1.5 rounded-full transition-all ${
+                      i === active ? 'progress-dot--active w-8' : 'w-3'
+                    }`}
+                  />
+                ))}
               </div>
+
+              <button
+                type="button"
+                onClick={() => go(1)}
+                disabled={active === beats.length - 1}
+                aria-label="Next beat"
+                className="neu-interactive w-11 h-11 rounded-full flex items-center justify-center text-gray-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <span className="font-mono text-[11px] text-gray-500 ml-1">
+                {String(active + 1).padStart(2, '0')} / {String(beats.length).padStart(2, '0')}
+              </span>
+            </div>
+
+            <div className="h-[3px] w-full max-w-xs bg-white/10 rounded-full mb-8">
+              <div
+                className="h-full bg-gold-400/80 rounded-full transition-[width] duration-300"
+                style={{ width: `${((active + 1) / beats.length) * 100}%` }}
+              />
+            </div>
+
+            <div key={`${project.id}-copy-${active}`} className="project-beat">
+              <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
+                {beat.label}
+              </p>
+              <p className="text-xl sm:text-2xl text-gray-200 leading-snug font-light max-w-lg min-h-[4.5rem]">
+                {beat.text}
+              </p>
+            </div>
+
+            <div className="mt-8">
+              <p className="text-sm text-gray-400 mb-4">{project.why}</p>
+              <div className="flex flex-wrap gap-3">
+                {project.stack.map((s) => (
+                  <div
+                    key={s}
+                    className="flex items-center gap-2 px-3 py-2 rounded-2xl neu-inset gold-text"
+                    title={s}
+                  >
+                    <TechMark name={s} className="w-7 h-7" />
+                    <span className="text-xs font-mono text-gray-300">{s}</span>
+                  </div>
+                ))}
+              </div>
+              {active === beats.length - 1 && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex items-center gap-2 font-mono text-xs gold-text tracking-wide"
+                >
+                  <Github size={14} /> View on GitHub
+                </a>
+              )}
             </div>
           </div>
-        );
-      }}
-    </StickyScene>
+
+          <div
+            className="relative aspect-square max-w-md mx-auto w-full"
+            style={{
+              transform: `scale(${0.9 + progress * 0.1})`,
+            }}
+          >
+            <div className="absolute inset-6 rounded-[2rem] neu-inset flex items-center justify-center p-8">
+              <ProjectSymbol project={project.id} className="w-full h-full max-w-[280px]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
