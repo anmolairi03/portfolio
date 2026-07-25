@@ -1,4 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { STORY_CHAPTERS } from '../story/chapters';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+import TravelScrollWord from './TravelScrollWord';
+
+const chapterMeta = STORY_CHAPTERS[2];
 
 interface Stage {
   id: string;
@@ -206,14 +211,15 @@ const BuildProcess: React.FC = () => {
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(true);
   const stage = STAGES[active];
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || reduceMotion) return;
     const id = window.setInterval(() => {
       setActive((i) => (i + 1) % STAGES.length);
     }, 4200);
     return () => window.clearInterval(id);
-  }, [playing, active]);
+  }, [playing, reduceMotion]);
 
   const select = useCallback((index: number) => {
     setPlaying(false);
@@ -222,6 +228,7 @@ const BuildProcess: React.FC = () => {
 
   return (
     <section id="process" data-theme="core" className="relative py-24 md:py-32 overflow-hidden">
+      <TravelScrollWord word={chapterMeta.word} />
       <div
         className="pointer-events-none absolute inset-0 opacity-60"
         style={{
@@ -233,14 +240,16 @@ const BuildProcess: React.FC = () => {
       <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="mb-10 md:mb-14 max-w-2xl">
           <p className="font-mono text-[10px] sm:text-xs tracking-[0.2em] gold-text mb-3 uppercase">
-            02 / Build lab
+            {chapterMeta.eyebrow}
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-            A claymorphic signal chain
+            Mess → Ship.
+            <br />
+            <span className="text-gray-500">The grammar of every build.</span>
           </h2>
           <p className="mt-4 text-gray-400 text-base sm:text-lg leading-relaxed">
-            Not a slide deck. Tap a node on the chain. Watch the stage light up. Same path every
-            real project takes from mess to ship.
+            Tap a node. This is the chain later chapters reuse: Intake, Shape, Index, Reason, Act,
+            Ship.
           </p>
         </div>
 
@@ -307,8 +316,8 @@ const BuildProcess: React.FC = () => {
                       </span>
 
                       <span
-                        className={`hidden sm:block h-2 w-2 rounded-full shrink-0 transition-colors ${
-                          on ? 'bg-gold-400' : done ? 'bg-gold-400/40' : 'bg-white/15'
+                        className={`hidden sm:block progress-dot h-2.5 w-2.5 rounded-full shrink-0 transition-all ${
+                          on ? 'progress-dot--active' : done ? 'progress-dot--done' : ''
                         }`}
                       />
                     </button>
