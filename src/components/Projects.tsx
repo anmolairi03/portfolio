@@ -1,140 +1,259 @@
 import React from 'react';
-import { Github, ArrowUpRight, FileSearch, Workflow, Zap } from 'lucide-react';
+import { Github, ArrowUpRight } from 'lucide-react';
+import StickyScene from './StickyScene';
+import { STORY_CHAPTERS, type StageId } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
+import { ProjectSymbol, TechMark } from './TechMarks';
+import TravelScrollWord from './TravelScrollWord';
 
-interface Project {
+interface Beat {
+  label: string;
+  text: string;
+}
+
+interface ProjectChapter {
+  id: 'docuchat' | 'mcp-agent';
   index: string;
   title: string;
   tagline: string;
-  icon: React.ReactNode;
-  description: string;
-  highlights: string[];
+  stages: StageId[];
+  problem: string;
+  beats: Beat[];
   stack: string[];
+  why: string;
   github: string;
 }
 
+const PROJECTS: ProjectChapter[] = [
+  {
+    id: 'docuchat',
+    index: 'Chain 01',
+    title: 'DocuChat',
+    tagline: 'Index → Reason → Ship',
+    stages: ['index', 'reason', 'ship'],
+    problem:
+      'Documents were sitting there unread. People needed answers grounded in the file, not a confident guess.',
+    beats: [
+      {
+        label: 'The problem',
+        text: 'Uploading a PDF and hoping a model remembers it is not a product. Hallucinations were the default.',
+      },
+      {
+        label: 'So I built',
+        text: 'A RAG pipeline: Hugging Face embeddings into FAISS, then LangChain + Gemini 2.5 Flash for multi-turn, source-aware chat.',
+      },
+      {
+        label: 'What broke',
+        text: 'Context windows and chunk boundaries. Bad splits meant the right passage never arrived.',
+      },
+      {
+        label: 'What I figured out',
+        text: 'Retrieval first. Then the answer. Streamlit made the loop usable for a real person uploading a real file.',
+      },
+      {
+        label: 'What I learned',
+        text: 'Useful AI is less about clever prompts and more about getting the right evidence into the room.',
+      },
+    ],
+    stack: ['RAG', 'FAISS', 'Hugging Face', 'Gemini 2.5 Flash', 'LangChain', 'Streamlit'],
+    why: 'To ship DocuChat I needed retrieval infrastructure, not another chat wrapper.',
+    github: 'https://github.com/anmolairi03',
+  },
+  {
+    id: 'mcp-agent',
+    index: 'Chain 02',
+    title: 'MCP Agent',
+    tagline: 'Reason → Act → Ship',
+    stages: ['reason', 'act', 'ship'],
+    problem:
+      'A model that can only talk is half a system. I needed an agent that could reach outside its training data.',
+    beats: [
+      {
+        label: 'The problem',
+        text: 'Static answers die when the world moves. Tool use was the missing half of the product.',
+      },
+      {
+        label: 'So I built',
+        text: 'An autonomous agent on LangGraph + LangChain with Model Context Protocol servers for live retrieval.',
+      },
+      {
+        label: 'What broke',
+        text: 'Control flow and auth. Without careful async orchestration, tools stalled or over-called.',
+      },
+      {
+        label: 'What I figured out',
+        text: 'Plan, call, observe, repeat. AsyncIO kept the loop non-blocking while MCP kept tools real.',
+      },
+      {
+        label: 'What I learned',
+        text: 'Action is the product. Reasoning only matters when it can change something outside the chat.',
+      },
+    ],
+    stack: ['LangGraph', 'LangChain', 'Gemini API', 'MCP', 'AsyncIO'],
+    why: 'To give the agent hands I needed MCP, ReAct-style control, and secure API access.',
+    github: 'https://github.com/anmolairi03',
+  },
+];
+
+const meta = STORY_CHAPTERS[5];
+
 const Projects: React.FC = () => {
-  const projects: Project[] = [
-    {
-      index: 'P.01',
-      title: 'DocuChat',
-      tagline: 'RAG-powered document Q&A',
-      icon: <FileSearch className="w-7 h-7" />,
-      description:
-        'A retrieval-augmented generation pipeline that lets you upload a document and have a real, context-aware conversation with it. Grounded answers, not hallucinations.',
-      highlights: [
-        'Semantic search over uploads with Hugging Face embeddings + a FAISS vector store',
-        'Multi-turn, context-aware analysis orchestrated with LangChain + Gemini 2.5 Flash',
-        'Interactive Streamlit frontend for real-time PDF upload and querying',
-      ],
-      stack: ['RAG', 'FAISS', 'Hugging Face', 'Gemini 2.5 Flash', 'LangChain', 'Streamlit'],
-      github: 'https://github.com/anmolairi03',
-    },
-    {
-      index: 'P.02',
-      title: 'MCP Agent',
-      tagline: 'Autonomous AI agent with tool use',
-      icon: <Workflow className="w-7 h-7" />,
-      description:
-        'An autonomous agent that plans, calls external tools, and retrieves live data, built on the Model Context Protocol so it can reach beyond its training data.',
-      highlights: [
-        'Agent architected with LangGraph + LangChain for reasoning and control flow',
-        'MCP servers integrated for real-time external data retrieval',
-        'Asynchronous, non-blocking task automation with AsyncIO + secure API auth',
-      ],
-      stack: ['LangGraph', 'LangChain', 'Gemini API', 'MCP', 'AsyncIO'],
-      github: 'https://github.com/anmolairi03',
-    },
-  ];
+  return (
+    <>
+      <section id="projects" data-theme="sand" className="pt-24 md:pt-28 relative overflow-hidden">
+        <TravelScrollWord word={meta.word} />
+        <div className="container mx-auto px-6 lg:px-10 relative z-10 pb-10">
+          <ScrollAnimation animationType="bounceLeft">
+            <div className="max-w-3xl">
+              <p className="font-mono text-sm gold-text mb-3">{meta.eyebrow}</p>
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[0.95] mb-4">
+                Two full runs of
+                <br />
+                <span className="gold-text">Mess → Ship.</span>
+              </h2>
+              <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
+                Projects are the heart of this log. Each one is a chapter: problem, build, break,
+                fix, learn. Stacks appear as symbols because the work demanded them.
+              </p>
+            </div>
+          </ScrollAnimation>
+        </div>
+      </section>
+
+      {PROJECTS.map((project, i) => (
+        <ProjectSticky key={project.id} project={project} theme={i === 0 ? 'sand' : 'ivory'} />
+      ))}
+
+      <div className="pb-20 px-6 lg:px-10" data-theme="sand">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4">
+          <p className="text-gray-500 text-sm">More experiments live on GitHub</p>
+          <a
+            href="https://github.com/anmolairi03"
+            target="_blank"
+            rel="noreferrer"
+            className="neu-interactive px-6 py-3.5 rounded-2xl font-semibold text-gray-200 inline-flex items-center gap-2"
+          >
+            <Github className="w-5 h-5 gold-text" />
+            github.com/anmolairi03
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const ProjectSticky: React.FC<{ project: ProjectChapter; theme: string }> = ({
+  project,
+  theme,
+}) => {
+  const beats = project.beats;
 
   return (
-    <section id="projects" data-theme="sand" className="py-24 relative overflow-hidden">
-      <div className="scroll-word" aria-hidden="true">BUILD</div>
-      <div className="container mx-auto px-6 lg:px-10 relative z-10">
-        <ScrollAnimation animationType="fadeUp">
-          <div className="max-w-2xl mb-16">
-            <p className="font-mono text-sm gold-text mb-3">04 / selected work</p>
-            <h2 className="font-display text-5xl md:text-7xl font-bold text-white mb-5 leading-[0.95]">
-              Retrieval becomes
-              <br />
-              <span className="gold-text">reasoning.</span>
-            </h2>
-            <p className="text-gray-400 leading-relaxed">
-              Two systems, one idea: give software useful context, then let it act with intent.
-            </p>
-          </div>
-        </ScrollAnimation>
-
-        <div className="grid lg:grid-cols-2 gap-8">
-          {projects.map((project, i) => (
-            <ScrollAnimation key={project.title} animationType="fadeUp" delay={i * 150}>
-              <div className="neu-raised rounded-3xl p-8 md:p-10 h-full flex flex-col group">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="w-16 h-16 rounded-2xl neu-inset flex items-center justify-center gold-text">
-                    {project.icon}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-gray-500">{project.index}</span>
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${project.title} on GitHub`}
-                      className="neu-interactive w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-gold-400"
-                    >
-                      <Github size={18} />
-                    </a>
-                  </div>
+    <StickyScene
+      count={beats.length}
+      heightPerChapter={90}
+      mobileHeightPerChapter={75}
+      theme={theme}
+      className="border-t border-white/5"
+    >
+      {({ active, progress, local, jumpTo }) => {
+        const beat = beats[active];
+        return (
+          <div className="h-full max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 pt-20 pb-16 flex items-center">
+            <div className="w-full grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-16 items-center">
+              <div key={`${project.id}-copy-${active}`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <p className="font-mono text-xs gold-text tracking-wide">{project.index}</p>
+                  <span className="text-gray-600">·</span>
+                  <p className="font-mono text-xs text-gray-500">{project.tagline}</p>
                 </div>
-
-                <h3 className="font-display text-2xl font-bold text-white mb-1 group-hover:gold-text transition-colors">
+                <h3 className="font-display text-4xl sm:text-5xl font-bold text-white mb-3">
                   {project.title}
                 </h3>
-                <p className="gold-text text-sm font-mono mb-5">{project.tagline}</p>
+                <p className="text-gray-400 leading-relaxed mb-6 max-w-md">{project.problem}</p>
 
-                <p className="text-gray-400 leading-relaxed mb-6">{project.description}</p>
-
-                <ul className="space-y-3 mb-8">
-                  {project.highlights.map((h, hi) => (
-                    <li key={hi} className="flex items-start gap-3 text-sm text-gray-300">
-                      <Zap className="w-4 h-4 gold-text mt-0.5 shrink-0" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2.5 mt-auto">
-                  {project.stack.map((s) => (
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.stages.map((s) => (
                     <span
                       key={s}
-                      className="px-3.5 py-1.5 rounded-xl neu-inset text-xs font-mono text-gray-300"
+                      className="px-3 py-1 rounded-full border border-gold-400/30 font-mono text-[10px] tracking-wider uppercase gold-text"
                     >
                       {s}
                     </span>
                   ))}
                 </div>
-              </div>
-            </ScrollAnimation>
-          ))}
-        </div>
 
-        <ScrollAnimation animationType="fadeUp" delay={300}>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14">
-            <p className="text-gray-500 text-sm">More experiments live on my GitHub</p>
-            <a
-              href="https://github.com/anmolairi03"
-              target="_blank"
-              rel="noreferrer"
-              className="neu-interactive px-6 py-3.5 rounded-2xl font-semibold text-gray-200 inline-flex items-center gap-2"
-            >
-              <Github className="w-5 h-5 gold-text" />
-              github.com/anmolairi03
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
+                <div className="flex gap-2 mb-6">
+                  {beats.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => jumpTo(i)}
+                      aria-label={`Beat ${i + 1}`}
+                      className={`progress-dot h-1.5 rounded-full transition-all ${
+                        i === active ? 'progress-dot--active w-8' : 'w-3'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className="h-[3px] w-full max-w-xs bg-white/10 rounded-full mb-8">
+                  <div
+                    className="h-full bg-gold-400/80 rounded-full transition-[width] duration-150"
+                    style={{ width: `${((active + local) / beats.length) * 100}%` }}
+                  />
+                </div>
+
+                <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
+                  {beat.label}
+                </p>
+                <p className="text-xl sm:text-2xl text-gray-200 leading-snug font-light max-w-lg">
+                  {beat.text}
+                </p>
+
+                <div className="mt-8">
+                  <p className="text-sm text-gray-400 mb-4">{project.why}</p>
+                  <div className="flex flex-wrap gap-3">
+                    {project.stack.map((s) => (
+                      <div
+                        key={s}
+                        className="flex items-center gap-2 px-3 py-2 rounded-2xl neu-inset gold-text"
+                        title={s}
+                      >
+                        <TechMark name={s} className="w-7 h-7" />
+                        <span className="text-xs font-mono text-gray-300">{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {active === beats.length - 1 && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 font-mono text-xs gold-text tracking-wide"
+                    >
+                      <Github size={14} /> View on GitHub
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="relative aspect-square max-w-md mx-auto w-full"
+                style={{
+                  transform: `scale(${0.9 + progress * 0.1})`,
+                }}
+              >
+                <div className="absolute inset-6 rounded-[2rem] neu-inset flex items-center justify-center p-8">
+                  <ProjectSymbol project={project.id} className="w-full h-full max-w-[280px]" />
+                </div>
+              </div>
+            </div>
           </div>
-        </ScrollAnimation>
-      </div>
-    </section>
+        );
+      }}
+    </StickyScene>
   );
 };
 

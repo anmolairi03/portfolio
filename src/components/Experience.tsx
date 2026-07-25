@@ -1,149 +1,169 @@
 import React from 'react';
-import { Calendar, MapPin, Briefcase, Trophy, Zap, Code2 } from 'lucide-react';
+import { STORY_CHAPTERS } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
+import TravelScrollWord from './TravelScrollWord';
+import ClayBlobs from './ClayBlobs';
 
-interface Role {
-  title: string;
+const meta = STORY_CHAPTERS[6];
+
+interface GrowthRun {
   company: string;
+  role: string;
   period: string;
-  location: string;
-  achievements: string[];
+  stages: string;
+  before: string;
+  during: string;
+  after: string;
   stack: string[];
 }
 
+const runs: GrowthRun[] = [
+  {
+    company: 'Tamizhan Skills RISE',
+    role: 'Data Science Intern',
+    period: 'Jun – Jul 2025',
+    stages: 'Intake → Shape → Ship',
+    before: 'I knew classroom models. Homework lived in notebooks.',
+    during:
+      'I architected eight end-to-end predictive pipelines across sectors with Python, Pandas, and Scikit-learn, plus an academic KPI dashboard.',
+    after: '90%+ average accuracy. Homework became product. Measurement entered the loop.',
+    stack: ['Python', 'Pandas', 'Scikit-learn', 'EDA', 'Dashboards'],
+  },
+  {
+    company: 'Ethara.ai',
+    role: 'Data & AI Intern',
+    period: 'Feb – May 2026',
+    stages: 'Shape → Ship',
+    before: 'Geospatial evaluation was still manual. Reporting was slow.',
+    during:
+      'I engineered an automated Python + Pandas/NumPy pipeline for geospatial mapping and a Streamlit microservice with PDF compliance reporting.',
+    after: '80%+ less processing time. 3× reporting efficiency. Manual evaluation gone.',
+    stack: ['Python', 'Pandas', 'NumPy', 'Streamlit', 'Matplotlib', 'FPDF2'],
+  },
+];
+
+const certs = [
+  {
+    title: 'Oracle Analytics Cloud 2025 Professional',
+    issuer: 'Oracle',
+    focus: 'Viz · ML deploy · modeling',
+  },
+  {
+    title: 'OCI 2025 AI Associate',
+    issuer: 'Oracle',
+    focus: 'Generative AI · LLM infra',
+  },
+  {
+    title: 'Machine Learning Specialization',
+    issuer: 'Coursera · Andrew Ng',
+    focus: 'Supervised · Unsupervised · NNs',
+  },
+];
+
 const Experience: React.FC = () => {
-  const roles: Role[] = [
-    {
-      title: 'Data & AI Intern',
-      company: 'Ethara.ai',
-      period: 'Feb 2026 – May 2026',
-      location: 'Remote',
-      achievements: [
-        'Engineered an automated Python app + scalable Pandas/NumPy pipeline for geospatial mapping, eliminating manual evaluation and cutting processing time by 80%+.',
-        'Deployed an interactive Streamlit microservice for real-time statistical analysis, paired with automated PDF compliance reporting (Matplotlib, FPDF2). 3x reporting efficiency.',
-      ],
-      stack: ['Python', 'Pandas', 'NumPy', 'Streamlit', 'Matplotlib', 'FPDF2'],
-    },
-    {
-      title: 'Data Science Intern',
-      company: 'Tamizhan Skills RISE',
-      period: 'Jun 2025 – Jul 2025',
-      location: 'Remote',
-      achievements: [
-        'Architected and deployed 8 end-to-end predictive modeling pipelines across sectors using Python, Pandas, and Scikit-learn, achieving 90%+ average accuracy.',
-        'Built an interactive academic analytics dashboard to visualize KPIs, accelerating data-driven decisions on complex datasets.',
-      ],
-      stack: ['Python', 'Pandas', 'Scikit-learn', 'EDA', 'KPI Dashboards'],
-    },
-  ];
-
-  const stats = [
-    { value: '80%+', label: 'Faster pipelines', icon: <Zap className="w-5 h-5" /> },
-    { value: '90%+', label: 'Model accuracy', icon: <Briefcase className="w-5 h-5" /> },
-    { value: '616+', label: 'LeetCode solved', icon: <Code2 className="w-5 h-5" /> },
-    { value: 'Nat’l', label: 'Level athlete', icon: <Trophy className="w-5 h-5" /> },
-  ];
-
-  const achievements = [
-    'National-level athlete: competitive discipline, time management, and consistency under pressure.',
-    '616+ problems solved on LeetCode across Arrays, Dynamic Programming, Graphs, Trees, and Strings.',
-  ];
-
   return (
-    <section id="experience" data-theme="red" className="py-24 relative overflow-hidden">
-      <div className="scroll-word" aria-hidden="true">IMPACT</div>
+    <section id="experience" data-theme="red" className="py-24 md:py-32 relative overflow-hidden">
+      <TravelScrollWord word={meta.word} />
+
+      {/* Claymorphic grid + throwable blobs */}
+      <div className="clay-grid" aria-hidden="true">
+        <div className="clay-grid__lines" />
+      </div>
+      <ClayBlobs />
+      <p className="clay-blobs__hint font-mono text-[10px] tracking-[0.16em] uppercase">
+        Drag a blob · fling to throw
+      </p>
+
       <div className="container mx-auto px-6 lg:px-10 relative z-10">
-        <ScrollAnimation animationType="fadeUp">
-          <div className="max-w-2xl mb-16">
-            <p className="font-mono text-sm gold-text mb-3">05 / experience</p>
-            <h2 className="font-display text-5xl md:text-7xl font-bold text-white mb-5 leading-[0.95]">
-              Less manual work.
+        <ScrollAnimation animationType="bounceLeft">
+          <div className="max-w-3xl mb-14 md:mb-20">
+            <p className="font-mono text-sm gold-text mb-3">{meta.eyebrow}</p>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[0.95] mb-4">
+              Industrial runs of
               <br />
-              <span className="gold-text">More momentum.</span>
+              <span className="gold-text">the same chain.</span>
             </h2>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              Not a date list. Before → during → after. Growth under real pressure.
+            </p>
           </div>
         </ScrollAnimation>
 
-        {/* Stat band */}
-        <ScrollAnimation animationType="fadeUp" delay={100}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16">
-            {stats.map((s, i) => (
-              <ScrollAnimation key={s.label} animationType="scale" delay={i * 80}>
-                <div className="neu-raised rounded-2xl p-6 text-center">
-                  <div className="w-11 h-11 rounded-xl neu-inset flex items-center justify-center gold-text mx-auto mb-3">
-                    {s.icon}
+        <div className="space-y-16 md:space-y-24 max-w-4xl">
+          {runs.map((run, i) => (
+            <ScrollAnimation
+              key={run.company}
+              animationType="bounceLeft"
+              delay={i * 80}
+            >
+              <article className="proof-card">
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-6">
+                  <h3 className="font-display text-2xl sm:text-3xl font-bold text-white">
+                    {run.company}
+                  </h3>
+                  <span className="font-mono text-xs text-gray-500">{run.period}</span>
+                </div>
+                <p className="gold-text font-medium mb-2">{run.role}</p>
+                <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-gray-500 mb-8">
+                  {run.stages}
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8">
+                  <div>
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gray-600 mb-2">
+                      Before
+                    </p>
+                    <p className="text-gray-400 leading-relaxed">{run.before}</p>
                   </div>
-                  <div className="font-display text-2xl font-bold text-white">{s.value}</div>
-                  <div className="text-xs text-gray-500 mt-1">{s.label}</div>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
-        </ScrollAnimation>
-
-        {/* Internships */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-14">
-          {roles.map((role, i) => (
-            <ScrollAnimation key={role.company} animationType="fadeUp" delay={i * 150}>
-              <div className="neu-raised rounded-3xl p-8 md:p-10 h-full flex flex-col">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="w-14 h-14 rounded-2xl neu-inset flex items-center justify-center gold-text">
-                    <Briefcase className="w-6 h-6" />
+                  <div>
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase gold-text mb-2">
+                      During
+                    </p>
+                    <p className="text-gray-300 leading-relaxed">{run.during}</p>
                   </div>
-                  <span className="px-4 py-1.5 rounded-full neu-inset font-mono text-xs text-teal-400">
-                    Internship
-                  </span>
+                  <div>
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gray-600 mb-2">
+                      After
+                    </p>
+                    <p className="text-gray-400 leading-relaxed">{run.after}</p>
+                  </div>
                 </div>
 
-                <h3 className="font-display text-2xl font-bold text-white">{role.title}</h3>
-                <p className="gold-text font-medium mb-4">{role.company}</p>
-
-                <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-6">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" /> {role.period}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4" /> {role.location}
-                  </span>
-                </div>
-
-                <ul className="space-y-3 mb-8">
-                  {role.achievements.map((a, ai) => (
-                    <li key={ai} className="flex items-start gap-3 text-sm text-gray-300 leading-relaxed">
-                      <Zap className="w-4 h-4 gold-text mt-0.5 shrink-0" />
-                      <span>{a}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2.5 mt-auto">
-                  {role.stack.map((s) => (
-                    <span key={s} className="px-3.5 py-1.5 rounded-xl neu-inset text-xs font-mono text-gray-300">
+                <div className="flex flex-wrap gap-2">
+                  {run.stack.map((s) => (
+                    <span
+                      key={s}
+                      className="px-3 py-1.5 rounded-xl neu-inset text-xs font-mono text-gray-300"
+                    >
                       {s}
                     </span>
                   ))}
                 </div>
-              </div>
+              </article>
             </ScrollAnimation>
           ))}
         </div>
 
-        {/* Achievements */}
-        <ScrollAnimation animationType="fadeUp" delay={200}>
-          <div className="neu-raised rounded-3xl p-8 md:p-10">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-2xl neu-inset flex items-center justify-center gold-text">
-                <Trophy className="w-6 h-6" />
-              </div>
-              <h3 className="font-display text-xl font-semibold text-white">Achievements</h3>
-            </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              {achievements.map((a, i) => (
-                <div key={i} className="neu-inset rounded-2xl p-5 text-gray-300 text-sm leading-relaxed">
-                  {a}
-                </div>
+        <ScrollAnimation animationType="bounceLeft" delay={120}>
+          <div className="mt-20 pt-12 border-t border-white/10 max-w-4xl">
+            <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
+              Calibrated instruments
+            </p>
+            <h3 className="font-display text-2xl text-white mb-8">Formal proof after field proof</h3>
+            <ul className="space-y-5">
+              {certs.map((c) => (
+                <li
+                  key={c.title}
+                  className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6"
+                >
+                  <span className="font-mono text-xs gold-text shrink-0 sm:w-36">{c.issuer}</span>
+                  <div>
+                    <p className="text-white font-medium">{c.title}</p>
+                    <p className="text-sm text-gray-500">{c.focus}</p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </ScrollAnimation>
       </div>

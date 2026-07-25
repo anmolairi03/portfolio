@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
               Anmol Airi<span className="gold-text">.</span>
             </p>
             <p className="text-gray-500 text-sm mt-1">
-              AI Engineer &amp; Backend Developer · New Delhi, India
+              Mess → Ship · Applied AI &amp; backend · New Delhi
             </p>
           </div>
 
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
         </div>
 
         <p className="text-center text-gray-600 text-xs mt-6">
-          © {new Date().getFullYear()} Anmol Airi · Built with React, Three.js &amp; a lot of consistency.
+          © {new Date().getFullYear()} Anmol Airi · The build log is still open.
         </p>
       </div>
     </footer>
