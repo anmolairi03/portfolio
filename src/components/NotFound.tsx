@@ -16,7 +16,7 @@ const COPY: Record<string, { code: string; title: string; body: string }> = {
   unset: {
     code: '404',
     title: 'That link is not connected',
-    body: 'This link has not been plugged in yet. Nothing is broken — it just leads nowhere for now.',
+    body: 'This link has not been plugged in yet. Nothing is broken. It just leads nowhere for now.',
   },
   error: {
     code: '500',
@@ -76,7 +76,7 @@ const NotFound: React.FC<NotFoundProps> = ({ reason = 'route', detail }) => {
               <Github className="w-4 h-4" aria-hidden="true" />
               GitHub
             </a>
-            <a className="notfound__btn" href="mailto:anmolairi03@gmail.com">
+            <a className="notfound__btn" href="mailto:anmolandananay@gmail.com">
               <Mail className="w-4 h-4" aria-hidden="true" />
               Email me
             </a>

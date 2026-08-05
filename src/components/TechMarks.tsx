@@ -12,6 +12,8 @@ import {
   Cpu,
   Code2,
   Layers,
+  Link2,
+  Container,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -31,6 +33,10 @@ const TECH_ICONS: Record<string, LucideIcon> = {
   pandas: Database,
   numpy: Binary,
   fastapi: Braces,
+  postgresql: Database,
+  redis: Database,
+  docker: Container,
+  pydantic: Braces,
   default: Boxes,
 };
 
@@ -52,9 +58,20 @@ export const TechMark: React.FC<{ name: string; className?: string }> = ({
 
 /** Big project identity using Lucide symbols */
 export const ProjectSymbol: React.FC<{
-  project: 'docuchat' | 'mcp-agent';
+  project: 'docuchat' | 'mcp-agent' | 'url-shortener';
   className?: string;
 }> = ({ project, className = '' }) => {
+  if (project === 'url-shortener') {
+    return (
+      <div className={`relative flex items-center justify-center ${className}`}>
+        <div className="absolute w-40 h-40 rounded-full bg-gold-400/15 blur-2xl" />
+        <Link2 className="w-28 h-28 sm:w-36 sm:h-36 gold-text relative z-10" strokeWidth={1.25} />
+        <Database className="absolute bottom-8 right-10 w-12 h-12 text-gray-500 opacity-70" strokeWidth={1.5} />
+        <Container className="absolute top-10 left-12 w-10 h-10 gold-text opacity-80" strokeWidth={1.5} />
+      </div>
+    );
+  }
+
   if (project === 'docuchat') {
     return (
       <div className={`relative flex items-center justify-center ${className}`}>

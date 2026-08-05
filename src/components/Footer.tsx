@@ -1,12 +1,13 @@
 import React from 'react';
 import { Github, Linkedin, Mail, Code2, ArrowUp } from 'lucide-react';
+import { SITE_LINKS } from '../story/links';
 
 const Footer: React.FC = () => {
   const socials = [
     { href: 'https://github.com/anmolairi03/', icon: Github, label: 'GitHub' },
     { href: 'http://www.linkedin.com/in/anmol809', icon: Linkedin, label: 'LinkedIn' },
     { href: 'https://leetcode.com/u/zeus408809/', icon: Code2, label: 'LeetCode' },
-    { href: 'mailto:anmolandanay@gmail.com', icon: Mail, label: 'Email' },
+    { href: SITE_LINKS.email, icon: Mail, label: 'Email' },
   ];
 
   return (
@@ -18,7 +19,7 @@ const Footer: React.FC = () => {
               Anmol Airi<span className="gold-text">.</span>
             </p>
             <p className="text-gray-500 text-sm mt-1">
-              Mess → Ship · Applied AI &amp; backend · New Delhi
+              Applied AI and Backend Engineer
             </p>
           </div>
 
@@ -46,7 +47,7 @@ const Footer: React.FC = () => {
         </div>
 
         <p className="text-center text-gray-600 text-xs mt-6">
-          © {new Date().getFullYear()} Anmol Airi · The build log is still open.
+          © {new Date().getFullYear()} Anmol Airi · Open to roles and collaborations.
         </p>
       </div>
     </footer>

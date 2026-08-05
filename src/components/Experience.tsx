@@ -1,10 +1,10 @@
 import React from 'react';
-import { STORY_CHAPTERS } from '../story/chapters';
+import { chapterById } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
 import TravelScrollWord from './TravelScrollWord';
 import ClayBlobs from './ClayBlobs';
 
-const meta = STORY_CHAPTERS[6];
+const meta = chapterById('experience');
 
 interface GrowthRun {
   company: string;
@@ -21,7 +21,7 @@ const runs: GrowthRun[] = [
   {
     company: 'Tamizhan Skills RISE',
     role: 'Data Science Intern',
-    period: 'Jun – Jul 2025',
+    period: 'Jun to Jul 2025',
     stages: 'Intake → Shape → Ship',
     before: 'I knew classroom models. Homework lived in notebooks.',
     during:
@@ -32,7 +32,7 @@ const runs: GrowthRun[] = [
   {
     company: 'Ethara.ai',
     role: 'Data & AI Intern',
-    period: 'Feb – May 2026',
+    period: 'Feb to May 2026',
     stages: 'Shape → Ship',
     before: 'Geospatial evaluation was still manual. Reporting was slow.',
     during:
@@ -79,12 +79,12 @@ const Experience: React.FC = () => {
           <div className="max-w-3xl mb-14 md:mb-20">
             <p className="font-mono text-sm gold-text mb-3">{meta.eyebrow}</p>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[0.95] mb-4">
-              Industrial runs of
+              Internships that
               <br />
-              <span className="gold-text">the same chain.</span>
+              <span className="gold-text">moved the numbers.</span>
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed">
-              Not a date list. Before → during → after. Growth under real pressure.
+              Before, during, after. Real constraints, measured outcomes.
             </p>
           </div>
         </ScrollAnimation>

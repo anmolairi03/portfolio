@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
-import { STORY_CHAPTERS } from '../story/chapters';
+import { chapterById } from '../story/chapters';
 import ThreeAvatar from './ThreeAvatar';
 import TravelScrollWord from './TravelScrollWord';
 
-const chapter = STORY_CHAPTERS[0];
+const chapter = chapterById('hero');
 
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
                 isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              {chapter.eyebrow}
+              CSE · MAIT &apos;26 · New Delhi
             </p>
 
             <h1
@@ -70,11 +70,11 @@ const Hero: React.FC = () => {
                 isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              Messy data.
+              AI systems
               <br />
-              Shipped systems.
+              <span className="text-gray-400">that stay</span>
               <br />
-              <span className="gold-text">That&apos;s the log.</span>
+              <span className="gold-text">grounded.</span>
             </h1>
 
             <p
@@ -82,8 +82,9 @@ const Hero: React.FC = () => {
                 isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              I&apos;m <span className="text-white font-medium">Anmol Airi</span>. CSE at MAIT.
-              Applied AI and backend — messy data into systems that ship.
+              I&apos;m <span className="text-white font-medium">Anmol Airi</span>. I build RAG
+              pipelines, LLM apps, and FastAPI backends for accuracy, latency, and a clean path into
+              production.
             </p>
 
             <div
@@ -94,23 +95,23 @@ const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() =>
-                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
                 }
                 className="group neu-interactive px-7 py-4 rounded-2xl font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500 flex items-center gap-2"
                 style={{ boxShadow: '6px 6px 12px #191b21, -6px -6px 12px #2d313b' }}
               >
-                Begin the story
-                <ArrowDown className="w-5 h-5 transition-transform group-hover:translate-y-0.5" />
+                View projects
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
               </button>
               <button
                 type="button"
                 onClick={() =>
-                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
                 }
                 className="neu-interactive px-7 py-4 rounded-2xl font-semibold text-gray-200 flex items-center gap-2"
               >
-                Skip to what shipped
-                <ArrowRight className="w-5 h-5 gold-text" />
+                About me
+                <ArrowDown className="w-5 h-5 gold-text" />
               </button>
             </div>
 
@@ -124,11 +125,10 @@ const Hero: React.FC = () => {
               }`}
             >
               <Mail className="w-4 h-4" />
-              New Delhi · Open to roles
+              Open to roles and collaborations
             </button>
           </div>
 
-          {/* Waving 3D character — primary hero visual */}
           <div className="relative flex justify-center items-center">
             <div
               className={`relative rounded-full p-4 sm:p-6 neu-inset transition-all duration-1000 ${

@@ -1115,6 +1115,31 @@ main > section::after {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* Scrolled header: sand surface + short lift, no glow */
+.site-header__bar {
+  background: var(--surface);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 4px 10px rgba(27, 23, 16, 0.14),
+    0 1px 2px rgba(27, 23, 16, 0.08);
+}
+
+/* Tapered white rule between Build intro and URL Shortener */
+.build-taper-rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem clamp(1.5rem, 8vw, 5rem);
+  line-height: 0;
+  background: var(--surface);
+}
+
+.build-taper-rule svg {
+  display: block;
+  width: min(72%, 42rem);
+  height: 4px;
+}
+
 /* Scroll drift bands */
 .scroll-drift {
   --drift: 0;
@@ -1168,46 +1193,152 @@ main > section::after {
   }
 }
 
-/* Fixed bottom narrative progress. */
+/* Fixed bottom narrative progress (draggable; docks left/right vertically). */
 .scroll-rail {
   position: fixed;
   z-index: 80;
   left: 1rem;
   right: 1rem;
-  bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
-  padding: 0.65rem 0.75rem 0.75rem;
+  bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
+  top: auto;
+  width: auto;
+  height: auto;
+  padding: 0.18rem 0.4rem 0.2rem;
   color: #f7f2e8;
-  background: rgba(20, 22, 28, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.34);
+  background: rgba(20, 22, 28, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.7rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    padding 0.28s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease,
+    width 0.28s ease,
+    border-radius 0.28s ease;
+  touch-action: none;
 }
 
-.scroll-rail__meta {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0.15rem 0.45rem;
+.scroll-rail.is-dragging {
+  transition: none;
+  cursor: grabbing;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  opacity: 0.95;
+}
+
+.scroll-rail.is-minimized {
+  padding: 0.14rem 0.4rem 0.16rem;
+  background: rgba(20, 22, 28, 0.45);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+.scroll-rail__top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 1rem;
+  margin-bottom: 0.14rem;
+}
+
+.scroll-rail.is-minimized .scroll-rail__top {
+  margin-bottom: 0.12rem;
+}
+
+.scroll-rail__brand,
+.scroll-rail__pct {
   color: rgba(255, 255, 255, 0.52);
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.48rem;
   letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.scroll-rail__brand {
+  justify-self: start;
+}
+
+.scroll-rail__pct {
+  justify-self: end;
+}
+
+.scroll-rail__brand--slim,
+.scroll-rail__pct--slim {
+  visibility: hidden;
+}
+
+.scroll-rail__chrome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.scroll-rail__drag,
+.scroll-rail__minimize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 0.9rem;
+  margin: 0;
+  padding: 0;
+  color: rgba(247, 242, 232, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.scroll-rail__drag {
+  cursor: grab;
+}
+
+.scroll-rail__drag:active {
+  cursor: grabbing;
+}
+
+.scroll-rail__drag:hover,
+.scroll-rail__minimize:hover {
+  color: #e9ac3f;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(233, 172, 63, 0.35);
 }
 
 .scroll-rail__track {
   position: relative;
-  height: 2.45rem;
+  height: 1.35rem;
   overflow: hidden;
-  border-radius: 0.65rem;
+  border-radius: 0.4rem;
   background: rgba(255, 255, 255, 0.08);
+  transition: height 0.28s ease, width 0.28s ease, border-radius 0.28s ease;
+}
+
+.scroll-rail.is-minimized .scroll-rail__track {
+  height: 0.22rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .scroll-rail__fill {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
   background: linear-gradient(90deg, #c48a2a, #e9ac3f);
-  transform-origin: left center;
-  transition: transform 80ms linear;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__fill,
+.scroll-rail.is-dock-right .scroll-rail__fill,
+.scroll-rail.is-drag-vertical .scroll-rail__fill {
+  background: linear-gradient(180deg, #c48a2a, #e9ac3f);
+  transform-origin: center top;
 }
 
 .scroll-rail__segments {
@@ -1221,10 +1352,10 @@ main > section::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.22rem;
   min-width: 0;
   min-height: 100%;
-  padding: 0 0.25rem;
+  padding: 0 0.15rem;
   color: rgba(247, 242, 232, 0.78);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   font-family: 'Space Mono', monospace;
@@ -1235,13 +1366,13 @@ main > section::after {
 }
 
 .scroll-rail__segment span {
-  font-size: 0.55rem;
+  font-size: 0.44rem;
   opacity: 0.55;
 }
 
 .scroll-rail__segment strong {
   overflow: hidden;
-  font-size: 0.58rem;
+  font-size: 0.48rem;
   font-weight: 400;
   letter-spacing: 0.04em;
   text-overflow: ellipsis;
@@ -1249,11 +1380,198 @@ main > section::after {
 }
 
 .scroll-rail__segment.is-active {
-  color: #23262e;
+  color: #1b1710;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .scroll-rail__segment.is-active strong {
   font-weight: 700;
+}
+
+/* Vertical docks */
+.scroll-rail.is-dock-left,
+.scroll-rail.is-dock-right {
+  top: 5.75rem;
+  bottom: 5.75rem;
+  width: 5.25rem;
+  max-height: calc(100svh - 11.5rem);
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem 0.32rem;
+}
+
+.scroll-rail.is-dock-left {
+  left: 0.65rem;
+  right: auto;
+}
+
+.scroll-rail.is-dock-right {
+  right: 0.65rem;
+  left: auto;
+}
+
+.scroll-rail.is-dock-left.is-minimized,
+.scroll-rail.is-dock-right.is-minimized {
+  width: 1.2rem;
+  padding: 0.32rem 0.22rem;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__top,
+.scroll-rail.is-dock-right .scroll-rail__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__brand,
+.scroll-rail.is-dock-right .scroll-rail__brand,
+.scroll-rail.is-dock-left .scroll-rail__pct,
+.scroll-rail.is-dock-right .scroll-rail__pct {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  justify-self: center;
+  letter-spacing: 0.14em;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__chrome,
+.scroll-rail.is-dock-right .scroll-rail__chrome {
+  flex-direction: column;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__track,
+.scroll-rail.is-dock-right .scroll-rail__track {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+
+.scroll-rail.is-dock-left.is-minimized .scroll-rail__track,
+.scroll-rail.is-dock-right.is-minimized .scroll-rail__track {
+  width: 0.22rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__segments,
+.scroll-rail.is-dock-right .scroll-rail__segments {
+  grid-template-columns: 1fr;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__segment,
+.scroll-rail.is-dock-right .scroll-rail__segment {
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.15rem 0.1rem;
+  border-right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scroll-rail.is-dock-left .scroll-rail__segment:last-child,
+.scroll-rail.is-dock-right .scroll-rail__segment:last-child {
+  border-bottom: 0;
+}
+
+.scroll-rail.is-dock-left .scroll-rail__segment strong,
+.scroll-rail.is-dock-right .scroll-rail__segment strong {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.15;
+  font-size: 0.44rem;
+}
+
+.scroll-rail.is-preview-left,
+.scroll-rail.is-preview-right {
+  outline: 1px solid rgba(233, 172, 63, 0.65);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(233, 172, 63, 0.25);
+}
+
+.scroll-rail.is-morphing {
+  outline: 1px dashed rgba(233, 172, 63, 0.45);
+}
+
+/* Live vertical layout while dragging into an edge zone (position comes from inline styles). */
+.scroll-rail.is-drag-vertical {
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem 0.32rem;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__brand,
+.scroll-rail.is-drag-vertical .scroll-rail__pct {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.14em;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__chrome {
+  flex-direction: column;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__track {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__segments {
+  grid-template-columns: 1fr;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__segment {
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.15rem 0.1rem;
+  border-right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__segment:last-child {
+  border-bottom: 0;
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__segment strong {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.15;
+  font-size: 0.44rem;
+}
+
+.scroll-rail__hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.45rem);
+  z-index: 2;
+  margin: 0;
+  padding: 0.28rem 0.55rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #1b1710;
+  background: #e9ac3f;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.scroll-rail.is-drag-vertical .scroll-rail__hint {
+  top: -1.85rem;
+  bottom: auto;
 }
 
 /* Continuity: left story nav only — no extra yellow decorative line */
@@ -1376,10 +1694,6 @@ main > section::after {
 
   .story-spine__node.is-done .story-spine__label {
     color: rgba(233, 172, 63, 0.65);
-  }
-
-  .story-main {
-    padding-left: 5.5rem;
   }
 }
 
@@ -1525,28 +1839,40 @@ main > section::after {
 }
 
 @media (max-width: 767px) {
-  .scroll-rail {
-    left: 0.5rem;
-    right: 0.5rem;
-    bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
-    padding: 0.5rem 0.5rem 0.55rem;
+  .scroll-rail.is-dock-bottom,
+  .scroll-rail:not(.is-dock-left):not(.is-dock-right) {
+    left: 0.45rem;
+    right: 0.45rem;
+    bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.14rem 0.32rem 0.16rem;
   }
 
   .scroll-rail__track {
-    /* keep tap targets at/near 44px */
-    height: 2.75rem;
+    height: 1.55rem;
   }
 
-  .scroll-rail__segment {
-    padding: 0 0.15rem;
+  .scroll-rail.is-minimized .scroll-rail__track {
+    height: 0.22rem;
   }
 
-  .scroll-rail__segment strong {
+  .scroll-rail.is-dock-left,
+  .scroll-rail.is-dock-right {
+    width: 3.1rem;
+    top: 5rem;
+    bottom: 4.5rem;
+  }
+
+  .scroll-rail.is-dock-left .scroll-rail__segment strong,
+  .scroll-rail.is-dock-right .scroll-rail__segment strong {
     display: none;
   }
 
+  .scroll-rail__segment {
+    padding: 0 0.1rem;
+  }
+
   .scroll-rail__segment span {
-    font-size: 0.68rem;
+    font-size: 0.52rem;
     opacity: 0.9;
   }
 }

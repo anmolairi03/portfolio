@@ -1,0 +1,174 @@
+﻿==== C:\Users\Lenovo\Downloads\Anmol_Airi_Resume_SDE1.pdf
+--- page 0 ---
+Anmol Airi
+ΓÖé┬╢ap-┬╢arker-altNew Delhi, India ΓÖéphone-alt8700048336 /envelΓîópeanmolandananay@gmail.com /linkedin-inlinkedin.com/anmol809 /githubgithub/anmolairi03 /codeLeetCode
+SUMMARY
+CSE graduate (MAIT, 2026) with software engineering and applied AI experience - LLM applications, RAG pipelines,
+and backend services in Python/FastAPI. 616+ LeetCode problems solved across Arrays, DP, Graphs, and Trees.
+Combines the discipline of a national-level athlete with hands-on experience shipping production-facing data and AI
+pipelines across two internships.
+SKILLS
+Languages: Python, SQL, JavaScript, HTML, CSS
+CS Fundamentals: Data Structures & Algorithms, OOP, DBMS, Operating Systems, Computer Networks
+Backend & Systems: FastAPI, REST APIs, Streamlit, Model Context Protocol (MCP), MySQL, PostgreSQL,
+Docker, Git, Microservices Architecture
+AI / ML / LLMs: LangChain, LangGraph, Hugging Face, Ollama, Claude API, Gemini API, OpenAI API,
+LLaMA-3, RAG Pipelines, FAISS, Vector Databases, TensorFlow, Keras, Scikit-learn, NLTK, OpenCV, Prompt
+Engineering, ReAct Agents
+Tools: Jupyter, VS Code, Tableau, Power BI, Pandas, NumPy
+INTERNSHIPS
+Data and AI Intern ΓÇö Ethara.ai ΓÇö Remote Feb 2026 ΓÇô May 2026
+ΓùªEngineered an automated Python application and scalable Pandas/NumPy data pipeline for geospatial mapping,
+eliminating manual evaluations and reducing data processing time by over 80%.
+ΓùªDeployed an interactive Streamlit microservice for real-time statistical analysis, paired with automated PDF
+compliance reporting (Matplotlib, FPDF2), increasing reporting efficiency by 3x.
+Environment: Python, Pandas, NumPy, Streamlit, Matplotlib, FPDF2, Geospatial Analysis, Data Pipelines
+Data Science Intern ΓÇö Tamizhan Skills RISE ΓÇö RemoteJun 2025 ΓÇô Jul 2025
+ΓùªArchitected and deployed 8 end-to-end predictive modeling pipelines across multiple sectors using Python,
+Pandas, and Scikit-learn, achieving 90%+ average model accuracy.
+ΓùªBuilt an interactive academic analytics dashboard to visualize KPIs, accelerating data-driven decisions on com-
+plex datasets.
+Environment: Python, Pandas, Scikit-learn, Predictive Modeling, EDA, KPI Dashboards
+PROJECTS
+DocuChat - RAG-Powered Document Q&A
+ΓùªBuilt a Retrieval-Augmented Generation pipeline with Hugging Face embeddings and a FAISS vector store for
+fast, high-accuracy semantic search over uploaded documents.
+ΓùªOrchestrated multi-turn, context-aware document analysis using LangChain and the Gemini 2.5 Flash API.
+ΓùªDeployed an interactive Streamlit frontend enabling real-time PDF upload and query.
+Environment: RAG, FAISS, Hugging Face Embeddings, Gemini 2.5 Flash API, LangChain, Streamlit
+AI Agent with MCP-Based Tool Integration
+ΓùªArchitected an autonomous AI agent using LangGraph and LangChain, integrating Model Context Protocol
+(MCP) servers for real-time external data retrieval.
+ΓùªBuilt asynchronous execution workflows with AsyncIO for non-blocking task automation.
+Environment: LangGraph, LangChain, Gemini API, MCP, AsyncIO, Secure API Authentication
+EDUCATION
+Maharaja Agrasen Institute of Technology 2022 ΓÇô 2026
+B.Tech, Computer Science & Engineering CGPA: 8.15
+Darshan Academy Public School 2020 ΓÇô 2022
+XII ΓÇô CBSE (92%) , X ΓÇô CBSE (92.4%)
+CERTIFICATIONS
+ΓùªOracle Analytics Cloud 2025 Professional - cloud data visualization, ML model deployment, and data modeling.
+ΓùªOracle Cloud Infrastructure 2025 AI Associate - OCI AI/ML portfolio, Generative AI, and LLM infrastructure.
+ΓùªMachine Learning Specialization (Coursera, Andrew Ng) - supervised/unsupervised learning and neural net-
+works.
+ACHIEVEMENTS
+ΓùªNational-level athlete - brings competitive discipline, time management, and consistency under pressure to
+technical work.
+Γùª616+ problems solved on LeetCode across Arrays, Dynamic Programming, Graphs, Trees, and Strings.
+Anmol Airi - Page 1 of 1
+==== C:\Users\Lenovo\Downloads\Anmol_Airi_Resume_SDE1_2026.pdf
+--- page 0 ---
+Anmol Airi
+New Delhi, India |8700048336 |anmolandananay@gmail.com |linkedin.com/anmol809 |github.com/anmolairi03
+LeetCode
+SUMMARY
+CSE graduate (MAIT, 2026) with software engineering experience across backend services, system design, and
+applied AI, building REST APIs, caching layers, and RAG pipelines in Python/FastAPI. Solved 616+ LeetCode
+problems spanning Arrays, DP, Graphs, and Trees. Combines the discipline of a national-level athlete with hands-
+on experience shipping production-facing data and backend pipelines across two internships.
+EDUCATION
+Maharaja Agrasen Institute of Technology 2022 - 2026
+B.Tech, Computer Science and Engineering CGPA: 8.15
+Darshan Academy Public School 2020 - 22
+XII- CBSE (92%), X- CBSE (92.4%)
+SKILLS
+Languages: Python, SQL, JavaScript, HTML, CSS
+CS Fundamentals: Data Structures & Algorithms, OOP, DBMS, Operating Systems, Computer Networks
+Backend & Systems: FastAPI, REST APIs, Streamlit, Model Context Protocol (MCP), MySQL, PostgreSQL,
+Redis, Docker, Git, Microservices Architecture
+AI / ML / LLMs: LangChain, LangGraph, Hugging Face, Ollama, Claude API, Gemini API, OpenAI API,
+LLaMA-3, RAG Pipelines, FAISS, Vector Databases, TensorFlow, Keras, Scikit-learn, NLTK, OpenCV, Prompt
+Engineering, ReAct Agents
+Tools: Jupyter, VS Code, Tableau, Power BI, Pandas, NumPy
+INTERNSHIPS
+Data and AI Intern
+Ethara.aiRemote, India
+Feb 2026 - May 2026
+ΓùªEngineered an automated Python application and a scalable Pandas/NumPy data pipeline for geospatial
+mapping, eliminating manual evaluation work and reducing data processing time by over 80%.
+ΓùªDeployed an interactive Streamlit microservice for real-time statistical analysis, paired with automated PDF
+compliance reporting (Matplotlib, FPDF2), increasing reporting efficiency 3x.
+Data Science Intern
+Tamizhan Skills RISERemote, India
+Jun 2025 - Jul 2025
+ΓùªArchitected and deployed 8 end-to-end predictive modeling pipelines across multiple sectors using Python,
+Pandas, and Scikit-learn, achieving 90%+ average model accuracy.
+ΓùªBuilt an interactive academic analytics dashboard to visualize KPIs, accelerating data-driven decisions on
+complex datasets.
+PROJECTS
+URL Shortener: Full-Stack System Design Project FastAPI ┬╖Redis
+ΓùªDesigned and built a full-stack URL shortener with FastAPI, PostgreSQL, and Redis, implementing collision-
+safe short-code generation and Pydantic-validated REST endpoints (POST /shorten, GET / {short code}).
+ΓùªImplemented a cache-aside caching layer in Redis with TTL-based expiration to serve repeat redirects without
+hitting PostgreSQL, and used HTTP 302 redirects to preserve accurate click tracking.
+ΓùªContainerized all four services (FastAPI, Streamlit, PostgreSQL, Redis) with Docker Compose, including
+dependency health checks so the backend waits for its datastores to be ready.
+AI Agent with MCP-Based Tool IntegrationLangGraph ┬╖MCP
+ΓùªArchitected an autonomous AI agent using LangGraph and LangChain, integrating Model Context Protocol
+(MCP) servers for real-time external data retrieval.
+ΓùªBuilt asynchronous execution workflows with AsyncIO for non-blocking task automation.
+CERTIFICATIONS
+ΓùªOracle Analytics Cloud 2025 Professional: cloud data visualization, ML model deployment, and data model-
+ing.
+ΓùªOracle Cloud Infrastructure 2025 AI Associate: OCI AI/ML portfolio, Generative AI, and LLM infrastructure.
+ΓùªMachine Learning Specialization (Coursera, Andrew Ng): supervised/unsupervised learning and neural net-
+works.
+ACHIEVEMENTS
+ΓùªNational-level athlete: brings competitive discipline, time management, and consistency under pressure to
+technical work.
+Γùª616+ problems solved on LeetCode across Arrays, Dynamic Programming, Graphs, Trees, and Strings.
+Anmol Airi, Page 1 of 1
+==== C:\Users\Lenovo\Downloads\Anmol_Airi_Resume_2026.pdf
+--- page 0 ---
+Recent CSE graduate from MAIT targeting Software Development and AI Engineering roles. Proven experience building LLM applications
+and complex RAG pipelines using LangChain, Ollama, Hugging Face models, and Python. Combines technical expertise in building scalable
+architectures with FastAPI and Streamlit with the focus and discipline of a national-level athlete.
+INTERNSHIPSSUMMARY
+EDUCATION
+Languages: Python, SQL, JavaScript, HTML, CSS
+AI / ML / LLMs: LangChain, LangGraph, Hugging Face, Ollama, Claude API, Gemini API, OpenAI API, LLaMA-3, RAG Pipelines,
+TensorFlow, Keras, Scikit-learn, NLTK, OpenCV, MediaPipe, Pandas, NumPy, FAISS, Vector Databases, Prompt Engineering, ReAct
+Agents
+Backend, Frameworks & Tools: FastAPI, Streamlit, Model Context Protocol (MCP), MySQL, PostgreSQL, Docker, Git, Jupyter, VS
+Code, Tableau, Power BI
+Core Expertise: Machine Learning, Deep Learning, Natural Language Processing (NLP), LLM Orchestration, RAG Architecture,
+Autonomous AI Agents, Data Engineering, EDA, Software Engineering, Microservices Architecture
+PROJECTS  Data Science Intern | Tamizhan Skills RISE | Remote | Jun 2025 ΓÇô Jul 2025
+Architected and deployed 8 end-to-end predictive modeling and data science pipelines across multiple sectors utilizing Python, Pandas,
+and Scikit-learn, achieving an average model accuracy of 90%+.
+Developed an interactive academic analytics dashboard to visualize KPIs, extracting actionable insights that accelerated data-driven
+decision-making for complex datasets.
+Environment: Python, Pandas, Scikit-learn, Predictive Modeling, Data Science, Exploratory Data Analysis (EDA), KPI Dashboards
+  AI Product Strategy Advisor
+Engineered a robust data ingestion pipeline utilizing FastAPI, MySQL, and Pandas to process datasets and calculate core business metrics,
+handling 10,000+ data points seamlessly.
+Architected a customizable, weighted scoring engine to rank product performance and drive data-backed strategic investment decisions.
+Integrated a LangChain-powered AI consultant into an interactive Streamlit microservice to generate automated, intelligent business insights.
+Environment: FastAPI, MySQL, Pandas, LangChain, Streamlit, Data Ingestion, Weighted Scoring Algorithms E m a i l : anmolandananay@gmail.com
+L i n k e d I n :       linkedin.com/in/anmol809/
+G i t H u b : github.com/anmolairi03
+P h o n e  N o :    8700048336
+Anmol Airi110009, New Delhi, Delhi, India
+  Data and AI Intern | Ethara.ai | Remote | Feb 2026 ΓÇô May 2026
+Engineered an automated Python application and scalable Pandas/NumPy data pipeline to execute complex geospatial mapping,
+eliminating manual evaluations and reducing data processing time by over 80%.
+Deployed an interactive Streamlit microservice for dynamic real-time statistical analysis, coupled with automated PDF compliance
+reporting utilizing Matplotlib and FPDF2, increasing reporting efficiency by 3x.
+Environment: Python, Pandas, NumPy, Streamlit, Matplotlib, FPDF2, Geospatial Analysis, Data Pipelines, Microservices ArchitectureDarshan Academy Public School | XII ΓÇô CBSE: 92% | X ΓÇô CBSE: 92.4% | 2020 ΓÇô 2022 Maharaja Agrasen Institute of Technology | B.Tech Computer Science & Engineering | CGPA: 8.15 | 2022 ΓÇô 2026
+  DocuChat - RAG-Powered Document Q&A
+Engineered a Retrieval-Augmented Generation (RAG) pipeline utilizing Hugging Face embeddings and a FAISS vector store for rapid, highly
+accurate semantic search.
+Leveraged LangChain and the Gemini 2.5 Flash API to orchestrate multi-turn, context-aware document analysis and complex question-
+answering.
+Deployed an interactive Streamlit frontend, enabling users to seamlessly upload PDFs and dynamically query document contents in real time.
+Environment: RAG, FAISS Vector Database, Hugging Face Embeddings, Gemini 2.5 Flash API, LangChain, Streamlit, Semantic Search  AI Agent with MCP-Based Tool Integration
+Architected an autonomous AI agent utilizing LangGraph and LangChain, integrating Model Context Protocol (MCP) servers for real-time
+external data retrieval.
+Developed high-performance, asynchronous execution workflows utilizing AsyncIO to ensure efficient, non-blocking task automation.
+Environment: LangGraph, LangChain, Gemini API, Model Context Protocol (MCP), AsyncIO, Secure API AuthenticationSKILLS
+CERTIFICATIONS
+Oracle Analytics Cloud 2025 Professional: Certified in cloud data visualization, machine learning model deployment, and data modeling.
+Oracle Cloud Infrastructure 2025 AI Associate: Certified in the OCI AI/ML portfolio, Generative AI, and LLM infrastructure.
+Machine Learning Specialization (Coursera): Completed Andrew Ng's comprehensive curriculum focusing on supervised/unsupervised
+learning and neural networks
+

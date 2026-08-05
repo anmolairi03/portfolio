@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { safeHref } from '../hooks/useRoute';
 import { SITE_LINKS } from '../story/links';
 import { Mail, Phone, Send, Github, Linkedin, Code2, Download, MapPin, Unplug } from 'lucide-react';
-import { STORY_CHAPTERS } from '../story/chapters';
+import { chapterById } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
 import TravelScrollWord from './TravelScrollWord';
 
-const meta = STORY_CHAPTERS[8];
+const meta = chapterById('contact');
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -14,20 +14,22 @@ const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const body = encodeURIComponent(`${formData.message}\n\n- ${formData.name} (${formData.email})`);
-    const subject = encodeURIComponent(formData.subject || 'Next chapter');
-    window.location.href = `mailto:anmolandanay@gmail.com?subject=${subject}&body=${body}`;
+    const subject = encodeURIComponent(formData.subject || 'Hello from the portfolio');
+    window.location.href = `${SITE_LINKS.email}?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const emailAddress = SITE_LINKS.email.replace(/^mailto:/, '');
+
   const contactItems = [
     {
       icon: <Mail className="w-5 h-5" />,
       label: 'Email',
-      value: 'anmolandanay@gmail.com',
-      href: 'mailto:anmolandanay@gmail.com',
+      value: emailAddress,
+      href: SITE_LINKS.email,
     },
     {
       icon: <Phone className="w-5 h-5" />,
@@ -50,7 +52,7 @@ const Contact: React.FC = () => {
     {
       icon: <Code2 className="w-5 h-5" />,
       label: 'LeetCode',
-      value: '616+ solved',
+      value: '@zeus408809',
       href: 'https://leetcode.com/u/zeus408809/',
     },
     {
@@ -73,12 +75,12 @@ const Contact: React.FC = () => {
           <div className="max-w-3xl mb-14 md:mb-16">
             <p className="font-mono text-sm gold-text mb-3">{meta.eyebrow}</p>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[0.95] mb-5">
-              This is what I&apos;ve built so far.
+              Let&apos;s talk about
               <br />
-              <span className="text-gray-500">The next thing is still being built.</span>
+              <span className="text-gray-500">what&apos;s next.</span>
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed max-w-2xl">
-              Maybe we build it together.
+              Open to roles, collaborations, and interesting backend or applied AI work.
             </p>
           </div>
         </ScrollAnimation>

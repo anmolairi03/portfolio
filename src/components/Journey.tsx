@@ -107,7 +107,7 @@ const CHAPTERS: Chapter[] = [
     title: 'Skip the myths.',
     lines: [
       'Pretty charts are not a product.',
-      'I measure what ships — and what moves the number.',
+      'I measure what ships, and what moves the number.',
     ],
     metric: 'Proof over polish',
     image: '/story/clay-07-myths.webp',

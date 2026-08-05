@@ -59,7 +59,7 @@ const GlassDebrisLayer: React.FC = () => {
       const el = document.createElement('button');
       el.type = 'button';
       el.className = 'glass-shard';
-      el.setAttribute('aria-label', 'Glass fragment — drag, or double-click to remove');
+      el.setAttribute('aria-label', 'Glass fragment: drag, or double-click to remove');
       el.style.width = `${spec.w}px`;
       el.style.height = `${spec.h}px`;
       el.style.opacity = String(spec.opacity);

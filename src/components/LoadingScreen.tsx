@@ -11,7 +11,7 @@ interface LoadingScreenProps {
 }
 
 /**
- * Boot overlay with a mini game. Stays up until the visitor presses Enter site,
+ * Boot overlay with a mini game. Stays up until the visitor presses Enter portfolio,
  * so a long load never forces them to stare at a bar.
  */
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ ready, progress, onEnter }) => {
@@ -32,7 +32,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ ready, progress, onEnter 
           {ready ? 'Systems ready' : 'Loading systems'}
         </h1>
         <p className="site-loader__sub font-mono">
-          {ready ? 'Take your time — the game keeps running' : 'Fonts · scene · interfaces'}
+          {ready ? 'Take your time. The game keeps running' : 'Fonts · scene · interfaces'}
         </p>
 
         <div
@@ -61,12 +61,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ ready, progress, onEnter 
             onClick={onEnter}
             disabled={!ready}
           >
-            {ready ? 'Enter site' : 'Loading…'}
+            {ready ? 'Enter portfolio' : 'Loading…'}
             {ready && <ArrowRight className="w-4 h-4" aria-hidden="true" />}
           </button>
           <p className="site-loader__enter-note font-mono">
             {ready
-              ? 'Or keep playing — nothing is waiting on you'
+              ? 'Or keep playing. Nothing is waiting on you'
               : 'Button unlocks when everything has loaded'}
           </p>
         </div>

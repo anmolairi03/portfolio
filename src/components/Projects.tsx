@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Github, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { STORY_CHAPTERS, type StageId } from '../story/chapters';
+import { chapterById, type StageId } from '../story/chapters';
 import { ScrollAnimation } from './ScrollAnimations';
 import { ProjectSymbol, TechMark } from './TechMarks';
 import TravelScrollWord from './TravelScrollWord';
@@ -11,7 +11,7 @@ interface Beat {
 }
 
 interface ProjectChapter {
-  id: 'docuchat' | 'mcp-agent';
+  id: 'docuchat' | 'mcp-agent' | 'url-shortener';
   index: string;
   title: string;
   tagline: string;
@@ -21,49 +21,52 @@ interface ProjectChapter {
   stack: string[];
   why: string;
   github: string;
+  theme: 'sand' | 'ivory' | 'red';
 }
 
 const PROJECTS: ProjectChapter[] = [
   {
-    id: 'docuchat',
-    index: 'Chain 01',
-    title: 'DocuChat',
-    tagline: 'Index → Reason → Ship',
-    stages: ['index', 'reason', 'ship'],
+    id: 'url-shortener',
+    index: 'Build 01',
+    title: 'URL Shortener',
+    tagline: 'Shape → Act → Ship',
+    stages: ['shape', 'act', 'ship'],
+    theme: 'red',
     problem:
-      'Documents were sitting there unread. People needed answers grounded in the file, not a confident guess.',
+      'Long links need a reliable short path: collision-safe codes, fast redirects, and click tracking that does not hammer the database.',
     beats: [
       {
         label: 'The problem',
-        text: 'Uploading a PDF and hoping a model remembers it is not a product. Hallucinations were the default.',
+        text: 'A shortener is not toy CRUD. Codes collide, caches go stale, and every redirect has to stay measurable.',
       },
       {
         label: 'So I built',
-        text: 'A RAG pipeline: Hugging Face embeddings into FAISS, then LangChain + Gemini 2.5 Flash for multi-turn, source-aware chat.',
+        text: 'A full-stack shortener with FastAPI, PostgreSQL, and Redis: collision-safe short codes and Pydantic-validated REST endpoints (POST /shorten, GET /{short_code}).',
       },
       {
         label: 'What broke',
-        text: 'Context windows and chunk boundaries. Bad splits meant the right passage never arrived.',
+        text: 'Repeat traffic hitting Postgres on every redirect. Without a cache layer, latency and load climbed for no good reason.',
       },
       {
         label: 'What I figured out',
-        text: 'Retrieval first. Then the answer. Streamlit made the loop usable for a real person uploading a real file.',
+        text: 'Cache-aside Redis with TTL for hot redirects, HTTP 302 so click tracking stays accurate, and Docker Compose with health checks so FastAPI waits on its datastores.',
       },
       {
         label: 'What I learned',
-        text: 'Useful AI is less about clever prompts and more about getting the right evidence into the room.',
+        text: 'System design shows up in the boring path: validation, caching, redirects, and containers that start in the right order.',
       },
     ],
-    stack: ['RAG', 'FAISS', 'Hugging Face', 'Gemini 2.5 Flash', 'LangChain', 'Streamlit'],
-    why: 'To ship DocuChat I needed retrieval infrastructure, not another chat wrapper.',
+    stack: ['FastAPI', 'PostgreSQL', 'Redis', 'Streamlit', 'Docker', 'Pydantic'],
+    why: 'A shortener that ships needs REST, a cache-aside layer, and services that come up healthy together.',
     github: 'https://github.com/anmolairi03',
   },
   {
     id: 'mcp-agent',
-    index: 'Chain 02',
+    index: 'Build 02',
     title: 'MCP Agent',
     tagline: 'Reason → Act → Ship',
     stages: ['reason', 'act', 'ship'],
+    theme: 'ivory',
     problem:
       'A model that can only talk is half a system. I needed an agent that could reach outside its training data.',
     beats: [
@@ -73,7 +76,7 @@ const PROJECTS: ProjectChapter[] = [
       },
       {
         label: 'So I built',
-        text: 'An autonomous agent on LangGraph + LangChain with Model Context Protocol servers for live retrieval.',
+        text: 'An autonomous agent on LangGraph and LangChain with Model Context Protocol servers for live retrieval.',
       },
       {
         label: 'What broke',
@@ -92,35 +95,79 @@ const PROJECTS: ProjectChapter[] = [
     why: 'To give the agent hands I needed MCP, ReAct-style control, and secure API access.',
     github: 'https://github.com/anmolairi03',
   },
+  {
+    id: 'docuchat',
+    index: 'Build 03',
+    title: 'DocuChat',
+    tagline: 'Index → Reason → Ship',
+    stages: ['index', 'reason', 'ship'],
+    theme: 'sand',
+    problem:
+      'Documents were sitting unread. People needed answers grounded in the file, not a confident guess.',
+    beats: [
+      {
+        label: 'The problem',
+        text: 'Uploading a PDF and hoping a model remembers it is not a product. Hallucinations were the default.',
+      },
+      {
+        label: 'So I built',
+        text: 'A RAG pipeline: Hugging Face embeddings into FAISS, then LangChain and Gemini 2.5 Flash for multi-turn, source-aware chat.',
+      },
+      {
+        label: 'What broke',
+        text: 'Context windows and chunk boundaries. Bad splits meant the right passage never arrived.',
+      },
+      {
+        label: 'What I figured out',
+        text: 'Retrieval first. Then the answer. Streamlit made the loop usable for someone uploading a real file.',
+      },
+      {
+        label: 'What I learned',
+        text: 'Useful AI is less about clever prompts and more about getting the right evidence into the room.',
+      },
+    ],
+    stack: ['RAG', 'FAISS', 'Hugging Face', 'Gemini 2.5 Flash', 'LangChain', 'Streamlit'],
+    why: 'To ship DocuChat I needed retrieval infrastructure, not another chat wrapper.',
+    github: 'https://github.com/anmolairi03',
+  },
 ];
 
-const meta = STORY_CHAPTERS[5];
+const meta = chapterById('projects');
 
 const Projects: React.FC = () => {
   return (
     <>
-      <section id="projects" data-theme="sand" className="pt-24 md:pt-28 relative overflow-hidden">
+      <section id="projects" data-theme="red" className="pt-24 md:pt-28 relative overflow-hidden">
+        <div className="clay-grid" aria-hidden="true">
+          <div className="clay-grid__lines" />
+        </div>
         <TravelScrollWord word={meta.word} />
         <div className="container mx-auto px-6 lg:px-10 relative z-10 pb-10">
           <ScrollAnimation animationType="bounceLeft">
             <div className="max-w-3xl">
               <p className="font-mono text-sm gold-text mb-3">{meta.eyebrow}</p>
               <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[0.95] mb-4">
-                Two full runs of
+                Projects I&apos;ve
                 <br />
-                <span className="gold-text">Mess → Ship.</span>
+                <span className="gold-text">designed and shipped.</span>
               </h2>
               <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
-                Projects are the heart of this log. Each one is a chapter: problem, build, break,
-                fix, learn. Stacks appear as symbols because the work demanded them.
+                Backend systems and AI apps built end to end: the problem, the architecture, what
+                failed, and what held. Stacks appear because the work needed them.
               </p>
             </div>
           </ScrollAnimation>
         </div>
       </section>
 
-      {PROJECTS.map((project, i) => (
-        <ProjectSlides key={project.id} project={project} theme={i === 0 ? 'sand' : 'ivory'} />
+      <div className="build-taper-rule" data-theme="red" aria-hidden="true">
+        <svg viewBox="0 0 200 6" preserveAspectRatio="none" focusable="false">
+          <polygon points="0,3 100,0 200,3 100,6" fill="rgba(255, 248, 232, 0.92)" />
+        </svg>
+      </div>
+
+      {PROJECTS.map((project) => (
+        <ProjectSlides key={project.id} project={project} />
       ))}
 
       <div className="pb-20 px-6 lg:px-10" data-theme="sand">
@@ -142,10 +189,7 @@ const Projects: React.FC = () => {
   );
 };
 
-const ProjectSlides: React.FC<{ project: ProjectChapter; theme: string }> = ({
-  project,
-  theme,
-}) => {
+const ProjectSlides: React.FC<{ project: ProjectChapter }> = ({ project }) => {
   const beats = project.beats;
   const [active, setActive] = useState(0);
   const beat = beats[active];
@@ -165,9 +209,19 @@ const ProjectSlides: React.FC<{ project: ProjectChapter; theme: string }> = ({
   };
 
   return (
-    <section data-theme={theme} className="relative border-t border-white/5 py-20 md:py-28">
+    <section
+      data-theme={project.theme}
+      className={`relative py-20 md:py-28 overflow-hidden ${
+        project.id === 'url-shortener' ? '' : 'border-t border-white/5'
+      }`}
+    >
+      {project.theme === 'red' && (
+        <div className="clay-grid" aria-hidden="true">
+          <div className="clay-grid__lines" />
+        </div>
+      )}
       <div
-        className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 outline-none"
+        className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 outline-none relative z-10"
         tabIndex={0}
         role="group"
         aria-roledescription="carousel"

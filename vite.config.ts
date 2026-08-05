@@ -7,6 +7,15 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/api/leetcode': {
+        target: 'https://leetcode-stats.tashif.codes',
+        changeOrigin: true,
+        rewrite: () => '/zeus408809',
+      },
+    },
+  },
   build: {
     rollupOptions: {
       output: {
