@@ -108,7 +108,10 @@ function fromPied(data: PiedPayload, username: string): LeetCodeStats | null {
 
 async function tryFetch(url: string): Promise<unknown | null> {
   try {
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      cache: 'no-store',
+    });
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -116,13 +119,21 @@ async function tryFetch(url: string): Promise<unknown | null> {
   }
 }
 
+function withCacheBust(url: string, bust: boolean): string {
+  if (!bust) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  return `${url}${sep}_=${Date.now()}`;
+}
+
 /**
  * Live stats for SITE_LINKS.leetcodeUsername.
  * Prefers the site API (Netlify function), then public CORS mirrors.
  */
 export async function fetchLeetCodeStats(
-  username = SITE_LINKS.leetcodeUsername
+  username = SITE_LINKS.leetcodeUsername,
+  options?: { bustCache?: boolean }
 ): Promise<{ stats: LeetCodeStats; live: boolean }> {
+  const bust = options?.bustCache ?? false;
   const sources: { url: string; parse: (data: unknown) => LeetCodeStats | null }[] = [
     {
       url: `/api/leetcode?username=${encodeURIComponent(username)}`,
@@ -139,7 +150,7 @@ export async function fetchLeetCodeStats(
   ];
 
   for (const source of sources) {
-    const raw = await tryFetch(source.url);
+    const raw = await tryFetch(withCacheBust(source.url, bust));
     if (!raw) continue;
     const stats = source.parse(raw);
     if (stats && stats.totalSolved > 0) {

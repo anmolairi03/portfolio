@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ExternalLink, Trophy, Target, Flame } from 'lucide-react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ExternalLink, Trophy, Target, Flame, RefreshCw } from 'lucide-react';
 import { chapterById } from '../story/chapters';
 import { SITE_LINKS } from '../story/links';
 import { safeHref } from '../hooks/useRoute';
@@ -29,25 +29,25 @@ const LeetCode: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const result = await fetchLeetCodeStats();
-        if (cancelled) return;
-        setStats(result.stats);
-        setLive(result.live);
-        setError(!result.live);
-      } catch {
-        if (!cancelled) setError(true);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const loadStats = useCallback(async (bustCache = false) => {
+    setLoading(true);
+    setError(false);
+    try {
+      const result = await fetchLeetCodeStats(undefined, { bustCache });
+      setStats(result.stats);
+      setLive(result.live);
+      setError(!result.live);
+    } catch {
+      setError(true);
+      setLive(false);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void loadStats(false);
+  }, [loadStats]);
 
   const heatmap = buildHeatmapDays(stats.submissionCalendar);
   const difficulties = [
@@ -147,15 +147,27 @@ const LeetCode: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <a
-                href={safeHref(SITE_LINKS.leetcode)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 neu-interactive px-5 py-2.5 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500 self-start sm:self-auto"
-              >
-                View profile
-                <ExternalLink className="w-4 h-4" />
-              </a>
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => void loadStats(true)}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 neu-interactive px-5 py-2.5 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                  aria-label="Refresh live LeetCode stats"
+                >
+                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                  Refresh
+                </button>
+                <a
+                  href={safeHref(SITE_LINKS.leetcode)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 neu-interactive px-5 py-2.5 rounded-xl text-sm font-semibold text-ink-base bg-gradient-to-r from-gold-400 to-gold-500"
+                >
+                  View profile
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
