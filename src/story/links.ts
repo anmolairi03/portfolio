@@ -5,6 +5,7 @@
 export const SITE_LINKS = {
   github: 'https://github.com/anmolairi03',
   linkedin: 'http://www.linkedin.com/in/anmol809',
+  linkedinUsername: 'anmol809',
   email: 'mailto:anmolandananay@gmail.com',
   resume: '/Anmol_Airi_Resume_SDE1_2026.pdf',
   leetcode: 'https://leetcode.com/u/zeus408809/',
